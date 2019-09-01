@@ -16,6 +16,8 @@ export default class Space extends Vue {
 
   private stars: THREE.Mesh[] = [];
   private starsLen: number = 200;
+  private width: number = -1;
+  private height: number = -1;
 
   private init() {
     const container = document.getElementById('container') as HTMLElement;
@@ -30,15 +32,19 @@ export default class Space extends Vue {
       0.1,
       1000,
     );
-    this.camera.position.z = 150;
+    this.camera.position.z = 500;
+
+    console.warn(this.width, this.height);
 
     for (let i = 0; i < this.starsLen; i++) {
-      const geometry = new THREE.CircleGeometry(2, 24);
+      const geometry = new THREE.CircleGeometry(8, 24);
       const material = new THREE.MeshBasicMaterial({ color: 0xefefef });
 
       const star = new THREE.Mesh(geometry, material);
-      star.position.x = Math.random() * this.width - this.width / 2;
-      star.position.y = Math.random() * this.height - this.height / 2;
+      star.position.x = (Math.random() - 0.5) * 500;
+      star.position.y = (Math.random() - 0.5) * 500;
+      star.position.z = (Math.random() - 0.5) * 500;
+
       this.stars.push(star);
       this.scene.add(star);
     }
@@ -57,8 +63,8 @@ export default class Space extends Vue {
   private animate() {
     requestAnimationFrame(this.animate);
 
-    for (let i = 0; i < this.stars.length; i++) {
-      this.stars[i].position.z -= 0.1;
+    for (const star of this.stars) {
+      star.position.z -= 0.5;
     }
 
     this.renderer.render(this.scene, this.camera);
