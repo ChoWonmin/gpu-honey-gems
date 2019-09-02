@@ -37,7 +37,7 @@ export default class Space extends Vue {
     console.warn(this.width, this.height);
 
     for (let i = 0; i < this.starsLen; i++) {
-      const geometry = new THREE.CircleGeometry(8, 24);
+      const geometry = new THREE.CircleGeometry(4, 8);
       const material = new THREE.MeshBasicMaterial({ color: 0xefefef });
 
       const star = new THREE.Mesh(geometry, material);

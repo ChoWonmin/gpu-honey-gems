@@ -2,8 +2,8 @@
 
 | Date  | Subject                     |     | Date  | Subject                     |
 | ----- | --------------------------- | --- | ----- | --------------------------- |
-| 9.2   | Star Field                  |     | 9.16  | Phong, Silhouette Shading   |
-| 9.23  | Geometry buffer: Fractal    |     | 9.30  | Cinematic Rendering         |
+| 9.2   | Star Field                  |     | 9.16  | Geometry buffer: Fractal    |
+| 9.23  | Phong, Silhouette Shading   |     | 9.30  | Cinematic Rendering         |
 | 10.7  | Bump Map                    |     | 10.14 | Eviromental Map             |
 | 10.21 | Network Vis : Collision     |     | 10.28 | Network Vis : Springs       |
 | 11.4  | Depth of Field              |     | 11.11 | Depth of Field              |
