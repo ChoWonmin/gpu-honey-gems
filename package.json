@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "git-deploy": "vue-cli-service build --dest docs"
   },
   "dependencies": {
     "@types/lodash": "^4.14.137",
