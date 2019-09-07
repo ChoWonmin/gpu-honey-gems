@@ -9,7 +9,7 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/home',
+      path: '/',
       name: 'home',
       component: Home,
     },
@@ -23,14 +23,19 @@ export default new Router({
         import(/* webpackChunkName: "about" */ './views/About.vue'),
     },
     {
-      path: '/',
+      path: '/space',
       name: 'space',
       component: () => import('./render/Space'),
     },
     {
       path: '/CubeGeoBuffer',
-      name: 'CubeGeoBuffer',
+      name: 'cubeGeoBuffer',
       component: () => import('./render/CubeGeoBuffer'),
+    },
+    {
+      path: '/Fractal',
+      name: 'fractal',
+      component: () => import('./render/Fractal'),
     },
   ],
 });
