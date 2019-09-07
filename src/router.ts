@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
-import Space from './render/Space';
 
 Vue.use(Router);
 
@@ -27,6 +26,11 @@ export default new Router({
       path: '/',
       name: 'space',
       component: () => import('./render/Space'),
+    },
+    {
+      path: '/CubeGeoBuffer',
+      name: 'CubeGeoBuffer',
+      component: () => import('./render/CubeGeoBuffer'),
     },
   ],
 });

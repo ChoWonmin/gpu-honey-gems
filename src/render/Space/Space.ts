@@ -11,9 +11,6 @@ export default class Space extends Vue {
   private scene: any = null;
   private renderer: any = null;
 
-  // private width: number = 0;
-  // private height: number = 0;
-
   private stars: THREE.Mesh[] = [];
   private starsLen: number = 400;
   private width: number = -1;
