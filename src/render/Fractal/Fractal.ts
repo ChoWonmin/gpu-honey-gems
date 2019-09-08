@@ -37,25 +37,26 @@ export default class Fractal extends Vue {
     });
     const positions = [];
     const colors = [];
-    const r = 800;
-    for (let i = 0; i < segments; i++) {
-      const x = Math.random() * r - r / 2;
-      const y = Math.random() * r - r / 2;
-      const z = Math.random() * r - r / 2;
-      // positions
-      positions.push(x, y, z);
-      // colors
-      colors.push(x / r + 0.5);
-      colors.push(y / r + 0.5);
-      colors.push(z / r + 0.5);
-    }
+
+    positions.push(100, 100, 0);
+    positions.push(500, 500, 0);
+
+    positions.push(400, -400, 0);
+    positions.push(200, -200, 0);
+
+    colors.push(255, 0, 0);
+    colors.push(0, 0, 255);
+
+    colors.push(255, 255, 255);
+    colors.push(255, 255, 255);
+
     geometry.addAttribute(
       'position',
       new THREE.Float32BufferAttribute(positions, 3),
     );
     geometry.addAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-
     geometry.computeBoundingSphere();
+
     this.cube = new THREE.Line(geometry, material);
     this.scene.add(this.cube);
 
@@ -73,10 +74,10 @@ export default class Fractal extends Vue {
   private animate() {
     requestAnimationFrame(this.animate);
 
-    const time = Date.now() * 0.001;
+    // const time = Date.now() * 0.001;
 
-    this.cube.rotation.x = time * 0.25;
-    this.cube.rotation.y = time * 0.5;
+    // this.cube.rotation.x = time * 0.25;
+    // this.cube.rotation.y = time * 0.5;
 
     this.renderer.render(this.scene, this.camera);
   }

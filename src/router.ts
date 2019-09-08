@@ -37,5 +37,10 @@ export default new Router({
       name: 'fractal',
       component: () => import('./render/Fractal'),
     },
+    {
+      path: '/Instancing',
+      name: 'instancing',
+      component: () => import('./render/Instancing'),
+    },
   ],
 });

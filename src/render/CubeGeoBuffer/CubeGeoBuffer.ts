@@ -4,7 +4,7 @@ import * as THREE from 'three';
 @Component({
   components: {
     //
-  },
+  }
 })
 export default class Fractal extends Vue {
   private camera: any = null;
@@ -26,14 +26,14 @@ export default class Fractal extends Vue {
       27,
       this.width / this.height,
       1,
-      4000,
+      4000
     );
     this.camera.position.z = 2750;
 
     const segments: number = 10000;
     const geometry = new THREE.BufferGeometry();
     const material = new THREE.LineBasicMaterial({
-      vertexColors: THREE.VertexColors,
+      vertexColors: THREE.VertexColors
     });
     const positions = [];
     const colors = [];
@@ -51,7 +51,7 @@ export default class Fractal extends Vue {
     }
     geometry.addAttribute(
       'position',
-      new THREE.Float32BufferAttribute(positions, 3),
+      new THREE.Float32BufferAttribute(positions, 3)
     );
     geometry.addAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
 
@@ -84,5 +84,10 @@ export default class Fractal extends Vue {
   private mounted() {
     this.init();
     this.animate();
+  }
+
+  private beforeDestroy() {
+    this.scene.dispose();
+    this.renderer.dispose();
   }
 }
