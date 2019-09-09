@@ -1,5 +1,6 @@
 import { Component, Vue } from 'vue-property-decorator';
 import * as THREE from 'three';
+import Shader from './Shader';
 
 @Component({
   components: {
@@ -13,40 +14,6 @@ export default class Instancing extends Vue {
 
   private width: number = -1;
   private height: number = -1;
-
-  private vertexShader: string = `
-    precision highp float;
-		uniform float sineTime;
-		uniform mat4 modelViewMatrix;
-		uniform mat4 projectionMatrix;
-		attribute vec3 position;
-		attribute vec3 offset;
-		attribute vec4 color;
-		attribute vec4 orientationStart;
-		attribute vec4 orientationEnd;
-		varying vec3 vPosition;
-		varying vec4 vColor;
-		void main(){
-			vPosition = offset * max( abs( sineTime * 2.0 + 1.0 ), 0.5 ) + position;
-			vec4 orientation = normalize( mix( orientationStart, orientationEnd, sineTime ) );
-			vec3 vcV = cross( orientation.xyz, vPosition );
-			vPosition = vcV * ( 2.0 * orientation.w ) + ( cross( orientation.xyz, vcV ) * 2.0 + vPosition );
-			vColor = color;
-			gl_Position = projectionMatrix * modelViewMatrix * vec4( vPosition, 1.0 );
-		}
-  `;
-
-  private fragmentShader: string = `
-    precision highp float;
-		uniform float time;
-		varying vec3 vPosition;
-		varying vec4 vColor;
-		void main() {
-			vec4 color = vec4( vColor );
-			color.r += sin( vPosition.x * 10.0 + time ) * 0.5;
-			gl_FragColor = color;
-		}
-  `;
 
   private init() {
     const container = document.getElementById('container') as HTMLElement;
@@ -107,7 +74,7 @@ export default class Instancing extends Vue {
     }
 
     const geometry = new THREE.InstancedBufferGeometry();
-    geometry.maxInstancedCount = instances; // set so its initalized for dat.GUI, will be set in first draw otherwise
+    geometry.maxInstancedCount = instances;
     geometry.addAttribute(
       'position',
       new THREE.Float32BufferAttribute(positions, 3)
@@ -134,8 +101,8 @@ export default class Instancing extends Vue {
         time: { value: 1.0 },
         sineTime: { value: 1.0 }
       },
-      vertexShader: this.vertexShader,
-      fragmentShader: this.fragmentShader,
+      vertexShader: Shader.vertexShader,
+      fragmentShader: Shader.fragmentShader,
       side: THREE.DoubleSide,
       transparent: true
     });
@@ -159,9 +126,9 @@ export default class Instancing extends Vue {
     const object = this.scene.children[0];
 
     object.rotation.y = time * 0.0005;
-    object.material.uniforms['time'].value = time * 0.005;
+    object.material.uniforms['time'].value = time * 0.05;
     object.material.uniforms['sineTime'].value = Math.sin(
-      object.material.uniforms['time'].value * 0.05
+      object.material.uniforms['time'].value * 0.1
     );
 
     this.renderer.render(this.scene, this.camera);
@@ -172,7 +139,7 @@ export default class Instancing extends Vue {
     this.animate();
   }
 
-  private beforeDestroy() {
+  private beforeMount() {
     console.warn('Instancing BD');
     this.scene.dispose();
     this.renderer.dispose();

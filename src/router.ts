@@ -11,7 +11,7 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home,
+      component: Home
     },
     {
       path: '/about',
@@ -20,27 +20,32 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "about" */ './views/About.vue'),
+        import(/* webpackChunkName: "about" */ './views/About.vue')
     },
     {
       path: '/space',
       name: 'space',
-      component: () => import('./render/Space'),
+      component: () => import('./render/Space')
     },
     {
       path: '/CubeGeoBuffer',
       name: 'cubeGeoBuffer',
-      component: () => import('./render/CubeGeoBuffer'),
+      component: () => import('./render/CubeGeoBuffer')
     },
     {
       path: '/Fractal',
       name: 'fractal',
-      component: () => import('./render/Fractal'),
+      component: () => import('./render/Fractal')
     },
     {
       path: '/Instancing',
       name: 'instancing',
-      component: () => import('./render/Instancing'),
+      component: () => import('./render/Instancing')
     },
-  ],
+    {
+      path: '/Liquid',
+      name: 'iiquid',
+      component: () => import('./render/Liquid')
+    }
+  ]
 });

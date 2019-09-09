@@ -87,6 +87,7 @@ export default class Fractal extends Vue {
   }
 
   private beforeDestroy() {
+    console.warn('Cube BD');
     this.scene.dispose();
     this.renderer.dispose();
   }

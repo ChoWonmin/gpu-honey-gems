@@ -1,16 +1,16 @@
 import { Component, Vue } from 'vue-property-decorator';
 import * as THREE from 'three';
+import Shader from './Shader';
 
 @Component({
   components: {
     //
-  },
+  }
 })
 export default class Fractal extends Vue {
   private camera: any = null;
   private scene: any = null;
   private renderer: any = null;
-  private cube: THREE.Line = new THREE.Line();
 
   private width: number = -1;
   private height: number = -1;
@@ -22,48 +22,65 @@ export default class Fractal extends Vue {
     this.height = container.clientHeight;
 
     this.scene = new THREE.Scene();
+
     this.camera = new THREE.PerspectiveCamera(
-      27,
+      50,
       this.width / this.height,
       1,
-      4000,
+      10
     );
-    this.camera.position.z = 2750;
+    this.camera.position.z = 2;
 
-    const segments: number = 10000;
-    const geometry = new THREE.BufferGeometry();
-    const material = new THREE.LineBasicMaterial({
-      vertexColors: THREE.VertexColors,
-    });
+    // geometry
+    const vector = new THREE.Vector4();
+    const instances = 1;
     const positions = [];
+    const offsets = [];
     const colors = [];
 
-    positions.push(100, 100, 0);
-    positions.push(500, 500, 0);
+    positions.push(1, 1, 0);
+    positions.push(0.5, 0.5, -0.1);
+    positions.push(0, 0, 0);
 
-    positions.push(400, -400, 0);
-    positions.push(200, -200, 0);
+    for (let i = 0; i < instances; i++) {
+      // offsets
+      offsets.push(Math.random() - 0.5, Math.random() - 0.5, 0);
+      // colors
+      colors.push(Math.random(), Math.random(), Math.random(), 1);
+    }
 
-    colors.push(255, 0, 0);
-    colors.push(0, 0, 255);
-
-    colors.push(255, 255, 255);
-    colors.push(255, 255, 255);
-
+    const geometry = new THREE.InstancedBufferGeometry();
+    geometry.maxInstancedCount = instances;
     geometry.addAttribute(
       'position',
-      new THREE.Float32BufferAttribute(positions, 3),
+      new THREE.Float32BufferAttribute(positions, 3)
     );
-    geometry.addAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-    geometry.computeBoundingSphere();
+    geometry.addAttribute(
+      'offset',
+      new THREE.InstancedBufferAttribute(new Float32Array(offsets), 3)
+    );
+    geometry.addAttribute(
+      'color',
+      new THREE.InstancedBufferAttribute(new Float32Array(colors), 4)
+    );
 
-    this.cube = new THREE.Line(geometry, material);
-    this.scene.add(this.cube);
+    // material
+    const material = new THREE.RawShaderMaterial({
+      uniforms: {
+        time: { value: 1.0 },
+        sineTime: { value: 1.0 }
+      },
+      vertexShader: Shader.vertexShader,
+      fragmentShader: Shader.fragmentShader,
+      side: THREE.DoubleSide,
+      transparent: true
+    });
+
+    const mesh = new THREE.Mesh(geometry, material);
+    this.scene.add(mesh);
 
     this.renderer = new THREE.WebGLRenderer();
     this.renderer.setPixelRatio(window.devicePixelRatio);
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-
     this.renderer.setSize(this.width, this.height);
 
     if (container) {
@@ -74,10 +91,14 @@ export default class Fractal extends Vue {
   private animate() {
     requestAnimationFrame(this.animate);
 
-    // const time = Date.now() * 0.001;
+    const time = performance.now();
+    const object = this.scene.children[0];
 
-    // this.cube.rotation.x = time * 0.25;
-    // this.cube.rotation.y = time * 0.5;
+    // object.rotation.y = time * 0.0005;
+    // object.material.uniforms['time'].value = time * 0.005;
+    // object.material.uniforms['sineTime'].value = Math.sin(
+    //   object.material.uniforms['time'].value * 0.05
+    // );
 
     this.renderer.render(this.scene, this.camera);
   }
@@ -85,5 +106,11 @@ export default class Fractal extends Vue {
   private mounted() {
     this.init();
     this.animate();
+  }
+
+  private beforeMount() {
+    console.warn('Instancing BD');
+    this.scene.dispose();
+    this.renderer.dispose();
   }
 }
