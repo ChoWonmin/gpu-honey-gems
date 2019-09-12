@@ -33,7 +33,7 @@ export default class Liquid extends Vue {
     );
     this.camera.position.z = 10;
 
-    const geometry = new THREE.PlaneGeometry(4, 4);
+    const geometry = new THREE.PlaneGeometry(10, 6);
     const vertices = new Float32Array([
       -1.0,
       -1.0,
@@ -97,6 +97,10 @@ export default class Liquid extends Vue {
     texture2.wrapS = THREE.RepeatWrapping;
     texture2.wrapT = THREE.RepeatWrapping;
 
+    const texture3 = new THREE.TextureLoader().load('/img/texture/space.jpg');
+    texture3.wrapS = THREE.RepeatWrapping;
+    texture3.wrapT = THREE.RepeatWrapping;
+
     const material = new THREE.RawShaderMaterial({
       uniforms: {
         texture1: {
@@ -106,6 +110,10 @@ export default class Liquid extends Vue {
         texture2: {
           type: 't',
           value: texture2
+        },
+        texture3: {
+          type: 't',
+          value: texture3
         },
         time: { value: 1.0 }
       },

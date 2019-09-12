@@ -8,7 +8,10 @@
           .subtitle-2.link(@click="$router.push({name: 'cubeGeoBuffer'})") Cube
           .subtitle-2.link(@click="$router.push({name: 'fractal'})") Fractal Tree
           .subtitle-2.link(@click="$router.push({name: 'instancing'})") Instancing   
-      
+      .group.py-2
+        .title Texture
+        .item-list.pl-2
+          .subtitle-2.link(@click="$router.push({name: 'liquid'})") Liquid
       .group.py-2
         .title Animation
         .item-list.pl-2

@@ -29,6 +29,7 @@ export default new (class Shader {
     
     uniform sampler2D texture1;
     uniform sampler2D texture2;
+    uniform sampler2D texture3;
     uniform float time;
 
     varying vec2 vUv;
@@ -37,11 +38,15 @@ export default new (class Shader {
     
 		void main() {
       vec2 uv = vUv;
-      vec4 movement = texture2D(texture2, uv);
+      float sinTime = (sin(time)/2.0 + 0.5) * 0.01;
+      vec4 movement = texture2D(texture2, uv) * sinTime;
       
-      
-      
-      gl_FragColor = texture2D(texture1, uv/2.0);
+      if (movement.x > 0.005)
+        uv.x += movement.x;
+      if (movement.y > 0.005)  
+        uv.y += movement.y;
+
+      gl_FragColor = texture2D(texture3, uv);
 		}
   `;
 })();

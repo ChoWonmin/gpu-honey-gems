@@ -44,7 +44,7 @@ export default new Router({
     },
     {
       path: '/Liquid',
-      name: 'iiquid',
+      name: 'liquid',
       component: () => import('./render/Liquid')
     }
   ]
