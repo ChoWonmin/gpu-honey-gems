@@ -98,8 +98,7 @@ export default class Liquid extends Vue {
           type: 't',
           value: new THREE.TextureLoader().load('/img/texture/firemap.jpg')
         },
-        time: { value: 1.0 },
-        sineTime: { value: 1.0 }
+        time: { value: 1.0 }
       },
       vertexShader: Shader.vertexShader,
       fragmentShader: Shader.fragmentShader,
@@ -131,9 +130,6 @@ export default class Liquid extends Vue {
     const object = this.scene.children[0];
 
     object.material.uniforms['time'].value = time * 0.005;
-    object.material.uniforms['sineTime'].value = Math.sin(
-      object.material.uniforms['time'].value * 0.05
-    );
     this.renderer.render(this.scene, this.camera);
   }
 
