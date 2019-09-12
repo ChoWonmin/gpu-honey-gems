@@ -88,15 +88,24 @@ export default class Liquid extends Vue {
     // const uvs = geometry.attributes.uv.array;
     // geometry.addAttribute('uv', new THREE.BufferAttribute(uvs, 2));
 
+    const texture1 = new THREE.TextureLoader().load('/img/texture/texture.jpg');
+
+    texture1.wrapS = THREE.RepeatWrapping;
+    texture1.wrapT = THREE.RepeatWrapping;
+
+    const texture2 = new THREE.TextureLoader().load('/img/texture/firemap.jpg');
+    texture2.wrapS = THREE.RepeatWrapping;
+    texture2.wrapT = THREE.RepeatWrapping;
+
     const material = new THREE.RawShaderMaterial({
       uniforms: {
         texture1: {
           type: 't',
-          value: new THREE.TextureLoader().load('/img/texture/texture.jpg')
+          value: texture1
         },
         texture2: {
           type: 't',
-          value: new THREE.TextureLoader().load('/img/texture/firemap.jpg')
+          value: texture2
         },
         time: { value: 1.0 }
       },

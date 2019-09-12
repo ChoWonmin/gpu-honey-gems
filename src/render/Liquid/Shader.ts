@@ -36,11 +36,12 @@ export default new (class Shader {
     varying vec4 vColor;
     
 		void main() {
-      vec4 movement = texture2D(texture2, vUv);
-      vUv.x += movement.x * 0.1;
-      vUv.y += movement.y * 0.1;
+      vec2 uv = vUv;
+      vec4 movement = texture2D(texture2, uv);
       
-      gl_FragColor = texture2D(texture1, vUv);
+      
+      
+      gl_FragColor = texture2D(texture1, uv/2.0);
 		}
   `;
 })();
