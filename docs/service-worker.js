@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/gpu-honey-gems/precache-manifest.76a1bbda81c4ee1bbfafaabfab20049e.js"
+  "/gpu-honey-gems/precache-manifest.0a4bfd3e5048e0a87c7ee5fca5fe6a46.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "gpu-honey-gems"});

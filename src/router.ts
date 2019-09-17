@@ -46,6 +46,11 @@ export default new Router({
       path: '/Liquid',
       name: 'liquid',
       component: () => import('./render/Liquid')
+    },
+    {
+      path: '/Fire',
+      name: 'fire',
+      component: () => import('./render/Fire')
     }
   ]
 });

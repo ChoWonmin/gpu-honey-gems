@@ -1,15 +1,15 @@
 self.__precacheManifest = [
   {
-    "revision": "a42dc68697ec0e5f4f96",
-    "url": "/gpu-honey-gems/js/chunk-5c6fae68.5f19d055.js"
+    "revision": "8e28be28007e2669bf5e",
+    "url": "/gpu-honey-gems/js/chunk-5ec701b5.aeb9f3c4.js"
   },
   {
     "revision": "b54689b1892755ea6962",
     "url": "/gpu-honey-gems/js/about.509b21ed.js"
   },
   {
-    "revision": "778877ad9e21b8c5a09d",
-    "url": "/gpu-honey-gems/js/app.7908a7a1.js"
+    "revision": "5ece6c3e8cd6a3358ab5",
+    "url": "/gpu-honey-gems/js/app.fc12f842.js"
   },
   {
     "revision": "8bff9dba953bc348e07b",
@@ -20,31 +20,35 @@ self.__precacheManifest = [
     "url": "/gpu-honey-gems/robots.txt"
   },
   {
-    "revision": "1d5b84342eb9f45a310b",
-    "url": "/gpu-honey-gems/js/chunk-00fb117b.f0a514fd.js"
+    "revision": "70720f93c1b3bfc1a413",
+    "url": "/gpu-honey-gems/js/chunk-00fb117b.9642feb2.js"
   },
   {
     "revision": "ab31eb81bc503cb3a224",
     "url": "/gpu-honey-gems/js/chunk-vendors.fb96c0d1.js"
   },
   {
-    "revision": "dcc985197d963c4524cb",
-    "url": "/gpu-honey-gems/js/chunk-331244db.96619de3.js"
+    "revision": "aee31f882ff79f61b2f1",
+    "url": "/gpu-honey-gems/js/chunk-331244db.934f8bf7.js"
   },
   {
-    "revision": "576d393a69001266d27f",
-    "url": "/gpu-honey-gems/js/chunk-93a4f538.c797e214.js"
+    "revision": "fe3cdeb48ada5d35e71d",
+    "url": "/gpu-honey-gems/js/chunk-a79d3416.5fdfdf2e.js"
   },
   {
-    "revision": "fea159b23ec8a70294d2",
-    "url": "/gpu-honey-gems/js/chunk-526e57a3.0f215b8e.js"
+    "revision": "73f3aadb556506d1ec9d",
+    "url": "/gpu-honey-gems/js/chunk-526e57a3.e831c850.js"
   },
   {
-    "revision": "e414f515ddf345964a33",
-    "url": "/gpu-honey-gems/js/chunk-5ec701b5.366dd4f9.js"
+    "revision": "78ef8539dcc5706df83c",
+    "url": "/gpu-honey-gems/js/chunk-93a4f538.df4112f9.js"
   },
   {
-    "revision": "dcc985197d963c4524cb",
+    "revision": "3be107589d2068f9591b",
+    "url": "/gpu-honey-gems/js/chunk-5c6fae68.45cc82a7.js"
+  },
+  {
+    "revision": "aee31f882ff79f61b2f1",
     "url": "/gpu-honey-gems/css/chunk-331244db.71126b26.css"
   },
   {
@@ -56,7 +60,7 @@ self.__precacheManifest = [
     "url": "/gpu-honey-gems/img/texture/texture.jpg"
   },
   {
-    "revision": "5fc6205bc4780f5205e92425afc0642a",
+    "revision": "c4fe47328e3581164bceaa4045c7f6f5",
     "url": "/gpu-honey-gems/index.html"
   },
   {
@@ -64,27 +68,35 @@ self.__precacheManifest = [
     "url": "/gpu-honey-gems/img/texture/firemap.jpg"
   },
   {
+    "revision": "bc604c38f85575ef96ac3b9699dac63a",
+    "url": "/gpu-honey-gems/img/texture/explosion.png"
+  },
+  {
     "revision": "ab31eb81bc503cb3a224",
     "url": "/gpu-honey-gems/css/chunk-vendors.90a22533.css"
   },
   {
-    "revision": "576d393a69001266d27f",
+    "revision": "fe3cdeb48ada5d35e71d",
+    "url": "/gpu-honey-gems/css/chunk-a79d3416.8637a278.css"
+  },
+  {
+    "revision": "78ef8539dcc5706df83c",
     "url": "/gpu-honey-gems/css/chunk-93a4f538.5cad14a3.css"
   },
   {
-    "revision": "a42dc68697ec0e5f4f96",
+    "revision": "3be107589d2068f9591b",
     "url": "/gpu-honey-gems/css/chunk-5c6fae68.a3082e7d.css"
   },
   {
-    "revision": "fea159b23ec8a70294d2",
+    "revision": "73f3aadb556506d1ec9d",
     "url": "/gpu-honey-gems/css/chunk-526e57a3.1226d6dc.css"
   },
   {
-    "revision": "1d5b84342eb9f45a310b",
+    "revision": "70720f93c1b3bfc1a413",
     "url": "/gpu-honey-gems/css/chunk-00fb117b.f9716aa2.css"
   },
   {
-    "revision": "778877ad9e21b8c5a09d",
+    "revision": "5ece6c3e8cd6a3358ab5",
     "url": "/gpu-honey-gems/css/app.7d254343.css"
   }
 ];

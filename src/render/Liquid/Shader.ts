@@ -43,8 +43,8 @@ export default new (class Shader {
       float sinTime = (sin(time)/2.0 + 0.5) * 0.05;
       vec4 movement = texture2D(texture2, uv) * sinTime;
 
-      // uv.x += movement.x;
-      // uv.y += movement.y;
+      uv.x += movement.x;
+      uv.y += movement.y;
 
       gl_FragColor = texture2D(texture3, uv);
 		}
