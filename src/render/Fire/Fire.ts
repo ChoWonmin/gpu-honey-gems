@@ -7,7 +7,7 @@ import Shader from './Shader';
     //
   },
 })
-export default class Liquid extends Vue {
+export default class Fire extends Vue {
   private camera: any = null;
   private scene: any = null;
   private renderer: any = null;

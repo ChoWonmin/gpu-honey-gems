@@ -28,7 +28,7 @@ export default new (class Shader {
 		varying vec4 vColor;
 		void main() {
 			vec4 color = vec4( vColor );
-			color.r += sin( vPosition.x * 10.0 + time ) * 0.5;
+			color.r += sin( vPosition.x * 10.0 + time ) * 0.01;
 			gl_FragColor = color;
 		}
   `;
