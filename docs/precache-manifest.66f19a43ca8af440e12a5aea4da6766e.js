@@ -8,8 +8,8 @@ self.__precacheManifest = [
     "url": "/gpu-honey-gems/js/about.509b21ed.js"
   },
   {
-    "revision": "5ece6c3e8cd6a3358ab5",
-    "url": "/gpu-honey-gems/js/app.fc12f842.js"
+    "revision": "3ed33843fb4ad81e9473",
+    "url": "/gpu-honey-gems/js/app.a37b2f6e.js"
   },
   {
     "revision": "8bff9dba953bc348e07b",
@@ -60,7 +60,7 @@ self.__precacheManifest = [
     "url": "/gpu-honey-gems/img/texture/texture.jpg"
   },
   {
-    "revision": "c4fe47328e3581164bceaa4045c7f6f5",
+    "revision": "b061629491bdc0eab562a3a65b517ae2",
     "url": "/gpu-honey-gems/index.html"
   },
   {
@@ -96,7 +96,7 @@ self.__precacheManifest = [
     "url": "/gpu-honey-gems/css/chunk-00fb117b.f9716aa2.css"
   },
   {
-    "revision": "5ece6c3e8cd6a3358ab5",
-    "url": "/gpu-honey-gems/css/app.7d254343.css"
+    "revision": "3ed33843fb4ad81e9473",
+    "url": "/gpu-honey-gems/css/app.e73f8148.css"
   }
 ];

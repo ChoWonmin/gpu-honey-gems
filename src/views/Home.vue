@@ -12,6 +12,8 @@
         .title Texture
         .item-list.pl-2
           .subtitle-2.link(@click="$router.push({name: 'liquid'})") Liquid
+        .item-list.pl-2
+          .subtitle-2.link(@click="$router.push({name: 'fire'})") Fire  
       .group.py-2
         .title Animation
         .item-list.pl-2
