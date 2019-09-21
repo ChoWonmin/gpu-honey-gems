@@ -17,6 +17,7 @@ export default class Fire extends Vue {
   private renderer: any = null;
   private controls: any = null;
   private material: any = null;
+  private requestAnimationID: number = 0;
 
   private width: number = -1;
   private height: number = -1;
@@ -70,9 +71,8 @@ export default class Fire extends Vue {
   }
 
   private animate() {
-    requestAnimationFrame(this.animate);
-    this.material.uniforms['time'].value = 0.00025 * (Date.now() - this.start);
-
+    this.requestAnimationID = requestAnimationFrame(this.animate);
+    this.material.uniforms['time'].value = 0.0004 * (Date.now() - this.start);
     this.renderer.render(this.scene, this.camera);
   }
 
@@ -84,5 +84,11 @@ export default class Fire extends Vue {
   private beforeDestroy() {
     this.scene.dispose();
     this.renderer.dispose();
+    this.renderer.forceContextLoss();
+    window.cancelAnimationFrame(this.requestAnimationID);
+    // @ts-ignore release force
+    this.renderer.domElement = null;
+    // @ts-ignore release force
+    this.renderer = null;
   }
 }

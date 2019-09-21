@@ -10,6 +10,7 @@ export default class Space extends Vue {
   private camera: any = null;
   private scene: any = null;
   private renderer: any = null;
+  private requestAnimationID: number = 0;
 
   private stars: THREE.Mesh[] = [];
   private starsLen: number = 400;
@@ -56,7 +57,7 @@ export default class Space extends Vue {
   }
 
   private animate() {
-    requestAnimationFrame(this.animate);
+    this.requestAnimationID = requestAnimationFrame(this.animate);
 
     for (const star of this.stars) {
       star.position.z += 5;
@@ -78,5 +79,11 @@ export default class Space extends Vue {
   private beforeDestroy() {
     this.scene.dispose();
     this.renderer.dispose();
+    this.renderer.forceContextLoss();
+    window.cancelAnimationFrame(this.requestAnimationID);
+    // @ts-ignore release force
+    this.renderer.domElement = null;
+    // @ts-ignore release force
+    this.renderer = null;
   }
 }

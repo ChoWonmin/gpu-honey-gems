@@ -5,13 +5,14 @@ import Shader from './Shader';
 @Component({
   components: {
     //
-  },
+  }
 })
 export default class Liquid extends Vue {
   private camera: any = null;
   private scene: any = null;
   private renderer: any = null;
   private controls: any = null;
+  private requestAnimationID: number = 0;
 
   private width: number = -1;
   private height: number = -1;
@@ -27,7 +28,7 @@ export default class Liquid extends Vue {
       30,
       this.width / this.height,
       0.1,
-      1000,
+      1000
     );
     this.camera.position.z = 10;
 
@@ -51,7 +52,7 @@ export default class Liquid extends Vue {
       1.0,
       -1.0,
       -1.0,
-      1.0,
+      1.0
     ]);
     const colors = new Float32Array([
       1,
@@ -78,7 +79,7 @@ export default class Liquid extends Vue {
       0,
       0,
       1,
-      1,
+      1
     ]);
 
     // geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
@@ -103,29 +104,29 @@ export default class Liquid extends Vue {
       uniforms: {
         texture1: {
           type: 't',
-          value: texture1,
+          value: texture1
         },
         texture2: {
           type: 't',
-          value: texture2,
+          value: texture2
         },
         texture3: {
           type: 't',
-          value: texture3,
+          value: texture3
         },
-        time: { value: 1.0 },
+        time: { value: 1.0 }
       },
       vertexShader: Shader.vertexShader,
       fragmentShader: Shader.fragmentShader,
       side: THREE.DoubleSide,
-      transparent: true,
+      transparent: true
     });
 
     const plane = new THREE.Mesh(geometry, material);
 
     this.scene.add(plane);
     this.renderer = new THREE.WebGLRenderer({
-      antialias: true,
+      antialias: true
     });
 
     this.renderer.setSize(this.width, this.height);
@@ -140,7 +141,7 @@ export default class Liquid extends Vue {
   }
 
   private animate() {
-    requestAnimationFrame(this.animate);
+    this.requestAnimationID = requestAnimationFrame(this.animate);
     const time = performance.now();
     const object = this.scene.children[0];
 
@@ -156,5 +157,11 @@ export default class Liquid extends Vue {
   private beforeDestroy() {
     this.scene.dispose();
     this.renderer.dispose();
+    this.renderer.forceContextLoss();
+    window.cancelAnimationFrame(this.requestAnimationID);
+    // @ts-ignore release force
+    this.renderer.domElement = null;
+    // @ts-ignore release force
+    this.renderer = null;
   }
 }

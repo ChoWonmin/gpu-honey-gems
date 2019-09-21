@@ -11,6 +11,7 @@ export default class Fractal extends Vue {
   private camera: any = null;
   private scene: any = null;
   private renderer: any = null;
+  private requestAnimationID: number = 0;
 
   private width: number = -1;
   private height: number = -1;
@@ -89,7 +90,7 @@ export default class Fractal extends Vue {
   }
 
   private animate() {
-    requestAnimationFrame(this.animate);
+    this.requestAnimationID = requestAnimationFrame(this.animate);
 
     const time = performance.now();
     const object = this.scene.children[0];
@@ -109,8 +110,13 @@ export default class Fractal extends Vue {
   }
 
   private beforeMount() {
-    console.warn('Instancing BD');
     this.scene.dispose();
     this.renderer.dispose();
+    this.renderer.forceContextLoss();
+    window.cancelAnimationFrame(this.requestAnimationID);
+    // @ts-ignore release force
+    this.renderer.domElement = null;
+    // @ts-ignore release force
+    this.renderer = null;
   }
 }

@@ -11,6 +11,7 @@ export default class Fractal extends Vue {
   private scene: any = null;
   private renderer: any = null;
   private cube: THREE.Line = new THREE.Line();
+  private requestAnimationID: number = 0;
 
   private width: number = -1;
   private height: number = -1;
@@ -71,7 +72,7 @@ export default class Fractal extends Vue {
   }
 
   private animate() {
-    requestAnimationFrame(this.animate);
+    this.requestAnimationID = requestAnimationFrame(this.animate);
 
     const time = Date.now() * 0.001;
 
@@ -87,8 +88,13 @@ export default class Fractal extends Vue {
   }
 
   private beforeDestroy() {
-    console.warn('Cube BD');
     this.scene.dispose();
     this.renderer.dispose();
+    this.renderer.forceContextLoss();
+    window.cancelAnimationFrame(this.requestAnimationID);
+    // @ts-ignore release force
+    this.renderer.domElement = null;
+    // @ts-ignore release force
+    this.renderer = null;
   }
 }
