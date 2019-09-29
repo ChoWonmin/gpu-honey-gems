@@ -4,7 +4,7 @@ import * as THREE from 'three';
 @Component({
   components: {
     //
-  }
+  },
 })
 export default class Space extends Vue {
   private camera: any = null;
@@ -28,7 +28,7 @@ export default class Space extends Vue {
       75,
       this.width / this.height,
       0.1,
-      1000
+      1000,
     );
     this.camera.position.z = 500;
 
@@ -46,7 +46,7 @@ export default class Space extends Vue {
     }
 
     this.renderer = new THREE.WebGLRenderer({
-      antialias: true
+      antialias: true,
     });
 
     this.renderer.setSize(this.width, this.height);

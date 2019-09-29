@@ -1,17 +1,18 @@
 import { Component, Vue } from 'vue-property-decorator';
 import * as THREE from 'three';
+import { OrbitControls } from 'three-orbitcontrols-ts';
 
 // @ts-ignore
-import vs from '!!raw-loader!./Fire.vert';
+import vs from '!!raw-loader!./Terrain.vert';
 // @ts-ignore
-import fs from '!!raw-loader!./Fire.frag';
+import fs from '!!raw-loader!./Terrain.frag';
 
 @Component({
   components: {
     //
   },
 })
-export default class Fire extends Vue {
+export default class Terrain extends Vue {
   private camera: any = null;
   private scene: any = null;
   private renderer: any = null;
@@ -41,20 +42,15 @@ export default class Fire extends Vue {
 
     this.material = new THREE.RawShaderMaterial({
       uniforms: {
-        tExplosion: {
-          type: 't',
-          value: new THREE.TextureLoader().load('/img/texture/explosion.png'),
-        },
         time: { type: 'f', value: 0.0 },
         weight: { type: 'f', value: 10.0 },
       },
       vertexShader: vs,
       fragmentShader: fs,
       side: THREE.DoubleSide,
-      transparent: true,
     });
     const mesh = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(20, 5),
+      new THREE.BoxBufferGeometry(30, 5, 30),
       this.material,
     );
     this.scene.add(mesh);
@@ -67,12 +63,15 @@ export default class Fire extends Vue {
 
     if (container) {
       container.appendChild(this.renderer.domElement);
+      this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     }
   }
 
   private animate() {
     this.requestAnimationID = requestAnimationFrame(this.animate);
     this.material.uniforms.time.value = 0.0004 * (Date.now() - this.start);
+
+    this.controls.update();
     this.renderer.render(this.scene, this.camera);
   }
 

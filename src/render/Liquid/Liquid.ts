@@ -5,7 +5,7 @@ import Shader from './Shader';
 @Component({
   components: {
     //
-  }
+  },
 })
 export default class Liquid extends Vue {
   private camera: any = null;
@@ -28,7 +28,7 @@ export default class Liquid extends Vue {
       30,
       this.width / this.height,
       0.1,
-      1000
+      1000,
     );
     this.camera.position.z = 10;
 
@@ -52,7 +52,7 @@ export default class Liquid extends Vue {
       1.0,
       -1.0,
       -1.0,
-      1.0
+      1.0,
     ]);
     const colors = new Float32Array([
       1,
@@ -79,7 +79,7 @@ export default class Liquid extends Vue {
       0,
       0,
       1,
-      1
+      1,
     ]);
 
     // geometry.addAttribute('position', new THREE.BufferAttribute(vertices, 3));
@@ -104,29 +104,29 @@ export default class Liquid extends Vue {
       uniforms: {
         texture1: {
           type: 't',
-          value: texture1
+          value: texture1,
         },
         texture2: {
           type: 't',
-          value: texture2
+          value: texture2,
         },
         texture3: {
           type: 't',
-          value: texture3
+          value: texture3,
         },
-        time: { value: 1.0 }
+        time: { value: 1.0 },
       },
       vertexShader: Shader.vertexShader,
       fragmentShader: Shader.fragmentShader,
       side: THREE.DoubleSide,
-      transparent: true
+      transparent: true,
     });
 
     const plane = new THREE.Mesh(geometry, material);
 
     this.scene.add(plane);
     this.renderer = new THREE.WebGLRenderer({
-      antialias: true
+      antialias: true,
     });
 
     this.renderer.setSize(this.width, this.height);

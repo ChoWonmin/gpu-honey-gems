@@ -5,7 +5,7 @@ import Shader from './Shader';
 @Component({
   components: {
     //
-  }
+  },
 })
 export default class Instancing extends Vue {
   private camera: any = null;
@@ -28,7 +28,7 @@ export default class Instancing extends Vue {
       50,
       this.width / this.height,
       1,
-      10
+      10,
     );
     this.camera.position.z = 2;
 
@@ -50,7 +50,7 @@ export default class Instancing extends Vue {
       offsets.push(
         Math.random() - 0.5,
         Math.random() - 0.5,
-        Math.random() - 0.5
+        Math.random() - 0.5,
       );
       // colors
       colors.push(Math.random(), Math.random(), Math.random(), Math.random());
@@ -59,7 +59,7 @@ export default class Instancing extends Vue {
         Math.random() * 2 - 1,
         Math.random() * 2 - 1,
         Math.random() * 2 - 1,
-        Math.random() * 2 - 1
+        Math.random() * 2 - 1,
       );
       vector.normalize();
       orientationsStart.push(vector.x, vector.y, vector.z, vector.w);
@@ -68,7 +68,7 @@ export default class Instancing extends Vue {
         Math.random() * 2 - 1,
         Math.random() * 2 - 1,
         Math.random() * 2 - 1,
-        Math.random() * 2 - 1
+        Math.random() * 2 - 1,
       );
       vector.normalize();
       orientationsEnd.push(vector.x, vector.y, vector.z, vector.w);
@@ -78,34 +78,34 @@ export default class Instancing extends Vue {
     geometry.maxInstancedCount = instances;
     geometry.addAttribute(
       'position',
-      new THREE.Float32BufferAttribute(positions, 3)
+      new THREE.Float32BufferAttribute(positions, 3),
     );
     geometry.addAttribute(
       'offset',
-      new THREE.InstancedBufferAttribute(new Float32Array(offsets), 3)
+      new THREE.InstancedBufferAttribute(new Float32Array(offsets), 3),
     );
     geometry.addAttribute(
       'color',
-      new THREE.InstancedBufferAttribute(new Float32Array(colors), 4)
+      new THREE.InstancedBufferAttribute(new Float32Array(colors), 4),
     );
     geometry.addAttribute(
       'orientationStart',
-      new THREE.InstancedBufferAttribute(new Float32Array(orientationsStart), 4)
+      new THREE.InstancedBufferAttribute(new Float32Array(orientationsStart), 4),
     );
     geometry.addAttribute(
       'orientationEnd',
-      new THREE.InstancedBufferAttribute(new Float32Array(orientationsEnd), 4)
+      new THREE.InstancedBufferAttribute(new Float32Array(orientationsEnd), 4),
     );
     // material
     const material = new THREE.RawShaderMaterial({
       uniforms: {
         time: { value: 1.0 },
-        sineTime: { value: 1.0 }
+        sineTime: { value: 1.0 },
       },
       vertexShader: Shader.vertexShader,
       fragmentShader: Shader.fragmentShader,
       side: THREE.DoubleSide,
-      transparent: true
+      transparent: true,
     });
 
     const mesh = new THREE.Mesh(geometry, material);
@@ -129,7 +129,7 @@ export default class Instancing extends Vue {
     object.rotation.y = time * 0.0005;
     object.material.uniforms.time.value = time * 0.05;
     object.material.uniforms.sineTime.value = Math.sin(
-      object.material.uniforms.time.value * 0.005
+      object.material.uniforms.time.value * 0.005,
     );
 
     this.renderer.render(this.scene, this.camera);
@@ -140,7 +140,7 @@ export default class Instancing extends Vue {
     this.animate();
   }
 
-  private beforeMount() {
+  private beforeDestroy() {
     this.scene.dispose();
     this.renderer.dispose();
     this.renderer.forceContextLoss();

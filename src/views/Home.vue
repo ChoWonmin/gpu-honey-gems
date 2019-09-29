@@ -3,6 +3,10 @@
     .display-1 GPU-Honey-Gems
     .content-list-container.pa-2
       .group.py-2
+        .title Geometry
+        .item-list.pl-2
+          .subtitle-2.link(@click="$router.push({name: 'terrain'})") Terrain
+      .group.py-2
         .title Geometry Buffer
         .item-list.pl-2
           .subtitle-2.link(@click="$router.push({name: 'cubeGeoBuffer'})") Cube
