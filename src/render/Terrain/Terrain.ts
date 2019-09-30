@@ -6,6 +6,7 @@ import { OrbitControls } from 'three-orbitcontrols-ts';
 import vs from '!!raw-loader!./Terrain.vert';
 // @ts-ignore
 import fs from '!!raw-loader!./Terrain.frag';
+import { Vector3 } from 'three';
 
 @Component({
   components: {
@@ -25,6 +26,8 @@ export default class Terrain extends Vue {
   private start: number = -1;
 
   private init() {
+    const worldWidth = 256;
+    const worldDepth = 256;
     const container = document.getElementById('container') as HTMLElement;
 
     this.start = Date.now();
@@ -33,26 +36,57 @@ export default class Terrain extends Vue {
 
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(
-      30,
+      70,
       this.width / this.height,
       1,
-      10000,
+      15000,
     );
-    this.camera.position.z = 100;
+    this.camera.position.y = 1000;
+    this.camera.position.z = 2000;
+
+    const grass_texture = new THREE.TextureLoader().load(
+      '/img/texture/grass.jpg',
+    );
+
+    grass_texture.wrapS = THREE.RepeatWrapping;
+    grass_texture.wrapT = THREE.RepeatWrapping;
+
+    const ston_texture = new THREE.TextureLoader().load(
+      '/img/texture/stones.jpg',
+    );
+
+    ston_texture.wrapS = THREE.RepeatWrapping;
+    ston_texture.wrapT = THREE.RepeatWrapping;
 
     this.material = new THREE.RawShaderMaterial({
       uniforms: {
         time: { type: 'f', value: 0.0 },
         weight: { type: 'f', value: 10.0 },
+        grass: {
+          type: 't',
+          value: grass_texture,
+        },
       },
       vertexShader: vs,
       fragmentShader: fs,
       side: THREE.DoubleSide,
     });
-    const mesh = new THREE.Mesh(
-      new THREE.BoxBufferGeometry(30, 5, 30),
-      this.material,
+
+    const geometry = new THREE.PlaneBufferGeometry(
+      7500,
+      7500,
+      worldWidth,
+      worldDepth,
     );
+    geometry.rotateX(-Math.PI / 2);
+
+    for (let i = 0; i < geometry.attributes.position.array.length; i++) {
+      if (i % 3 == 1) {
+        geometry.attributes.position.array[i] += Math.random() * 150;
+      }
+    }
+
+    const mesh = new THREE.Mesh(geometry, this.material);
     this.scene.add(mesh);
 
     this.renderer = new THREE.WebGLRenderer({

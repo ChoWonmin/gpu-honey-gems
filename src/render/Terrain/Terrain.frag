@@ -1,11 +1,11 @@
 precision lowp float;
 
+uniform sampler2D grass;
+
 varying vec2 vUv;
 float PI = 3.14159265358979;
 
-
-
 void main() {
 
-  gl_FragColor = vec4( 0.3, 0.0, 0.3, 1.0 );
+  gl_FragColor = texture2D(grass, vUv);
 }
