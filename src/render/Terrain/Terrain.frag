@@ -9,10 +9,10 @@ float PI = 3.14159265358979;
 
 void main() {
 
-  if (vPosition.y > 150.0) {
-    gl_FragColor = texture2D(snow, vUv);
+  if (vPosition.y > 130.0) {
+    gl_FragColor = texture2D(snow, vUv * 10.0);
   } else {
-    gl_FragColor = texture2D(grass, vUv);
+    gl_FragColor = texture2D(grass, vUv * 10.0);
   }
 
   
