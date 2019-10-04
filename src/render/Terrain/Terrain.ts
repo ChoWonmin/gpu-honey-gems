@@ -41,8 +41,8 @@ export default class Terrain extends Vue {
       1,
       15000,
     );
-    this.camera.position.y = 1000;
-    this.camera.position.z = 2000;
+    this.camera.position.y = 700;
+    this.camera.position.z = 1000;
 
     const grassTexture = new THREE.TextureLoader().load(
       '/img/texture/grass.jpg',
@@ -57,10 +57,16 @@ export default class Terrain extends Vue {
     stonTexture.wrapT = THREE.RepeatWrapping;
 
     const heightTexture = new THREE.TextureLoader().load(
-      '/img/texture/terrain01.jpg',
+      '/img/texture/terrain02.png',
     );
     heightTexture.wrapS = THREE.RepeatWrapping;
     heightTexture.wrapT = THREE.RepeatWrapping;
+
+    const snowTexture = new THREE.TextureLoader().load(
+      '/img/texture/snow.jpg',
+    );
+    snowTexture.wrapS = THREE.RepeatWrapping;
+    snowTexture.wrapT = THREE.RepeatWrapping;
 
     this.material = new THREE.RawShaderMaterial({
       uniforms: {
@@ -73,6 +79,10 @@ export default class Terrain extends Vue {
         heightMap: {
           type: 't',
           value: heightTexture,
+        },
+        snow: {
+          type: 't',
+          value: snowTexture,
         },
       },
       vertexShader: vs,

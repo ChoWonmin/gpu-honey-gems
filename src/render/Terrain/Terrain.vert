@@ -21,7 +21,7 @@ void main() {
 
   vUv = uv;
   vPosition = position;
-  vPosition.y += 500.0 * texture2D(heightMap, vUv).y;
+  vPosition.y += 200.0 * texture2D(heightMap, vUv).y;
 
   gl_Position = projectionMatrix * modelViewMatrix * vec4( vPosition, 1.0 );
 

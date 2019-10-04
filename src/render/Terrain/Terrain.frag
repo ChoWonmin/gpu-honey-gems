@@ -1,12 +1,19 @@
 precision lowp float;
 
 uniform sampler2D grass;
-uniform sampler2D heightMap;
+uniform sampler2D snow;
 
+varying vec3 vPosition;
 varying vec2 vUv;
 float PI = 3.14159265358979;
 
 void main() {
 
-  gl_FragColor = texture2D(grass, vUv);
+  if (vPosition.y > 150.0) {
+    gl_FragColor = texture2D(snow, vUv);
+  } else {
+    gl_FragColor = texture2D(grass, vUv);
+  }
+
+  
 }
