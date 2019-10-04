@@ -1,6 +1,7 @@
 precision lowp float;
 
 uniform sampler2D grass;
+uniform sampler2D heightMap;
 
 varying vec2 vUv;
 float PI = 3.14159265358979;

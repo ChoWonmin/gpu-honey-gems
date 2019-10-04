@@ -44,19 +44,23 @@ export default class Terrain extends Vue {
     this.camera.position.y = 1000;
     this.camera.position.z = 2000;
 
-    const grass_texture = new THREE.TextureLoader().load(
+    const grassTexture = new THREE.TextureLoader().load(
       '/img/texture/grass.jpg',
     );
+    grassTexture.wrapS = THREE.RepeatWrapping;
+    grassTexture.wrapT = THREE.RepeatWrapping;
 
-    grass_texture.wrapS = THREE.RepeatWrapping;
-    grass_texture.wrapT = THREE.RepeatWrapping;
-
-    const ston_texture = new THREE.TextureLoader().load(
+    const stonTexture = new THREE.TextureLoader().load(
       '/img/texture/stones.jpg',
     );
+    stonTexture.wrapS = THREE.RepeatWrapping;
+    stonTexture.wrapT = THREE.RepeatWrapping;
 
-    ston_texture.wrapS = THREE.RepeatWrapping;
-    ston_texture.wrapT = THREE.RepeatWrapping;
+    const heightTexture = new THREE.TextureLoader().load(
+      '/img/texture/terrain01.jpg',
+    );
+    heightTexture.wrapS = THREE.RepeatWrapping;
+    heightTexture.wrapT = THREE.RepeatWrapping;
 
     this.material = new THREE.RawShaderMaterial({
       uniforms: {
@@ -64,7 +68,11 @@ export default class Terrain extends Vue {
         weight: { type: 'f', value: 10.0 },
         grass: {
           type: 't',
-          value: grass_texture,
+          value: grassTexture,
+        },
+        heightMap: {
+          type: 't',
+          value: heightTexture,
         },
       },
       vertexShader: vs,
@@ -73,18 +81,12 @@ export default class Terrain extends Vue {
     });
 
     const geometry = new THREE.PlaneBufferGeometry(
-      7500,
-      7500,
+      2000,
+      2000,
       worldWidth,
       worldDepth,
     );
     geometry.rotateX(-Math.PI / 2);
-
-    for (let i = 0; i < geometry.attributes.position.array.length; i++) {
-      if (i % 3 == 1) {
-        geometry.attributes.position.array[i] += Math.random() * 150;
-      }
-    }
 
     const mesh = new THREE.Mesh(geometry, this.material);
     this.scene.add(mesh);
