@@ -42,7 +42,7 @@ export default class Terrain extends Vue {
       15000,
     );
     this.camera.position.y = 1000;
-    this.camera.position.z = 500;
+    this.camera.position.z = 1000;
 
     const grassTexture = new THREE.TextureLoader().load(
       '/img/texture/grass.jpg',
