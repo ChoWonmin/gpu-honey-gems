@@ -44,6 +44,12 @@ export default class Terrain extends Vue {
     this.camera.position.y = 1000;
     this.camera.position.z = 1000;
 
+    const waterTexture = new THREE.TextureLoader().load(
+      '/img/texture/water.jpg',
+    );
+    waterTexture.wrapS = THREE.RepeatWrapping;
+    waterTexture.wrapT = THREE.RepeatWrapping;
+
     const grassTexture = new THREE.TextureLoader().load(
       '/img/texture/grass.jpg',
     );
@@ -57,7 +63,7 @@ export default class Terrain extends Vue {
     stonTexture.wrapT = THREE.RepeatWrapping;
 
     const heightTexture = new THREE.TextureLoader().load(
-      '/img/texture/terrain02.png',
+      '/img/texture/valley.png',
     );
     heightTexture.wrapS = THREE.RepeatWrapping;
     heightTexture.wrapT = THREE.RepeatWrapping;
@@ -69,7 +75,11 @@ export default class Terrain extends Vue {
     this.material = new THREE.RawShaderMaterial({
       uniforms: {
         time: { type: 'f', value: 0.0 },
-        maxHeight: { type: 'f', value: 500.0 },
+        maxHeight: { type: 'f', value: 200.0 },
+        water: {
+          type: 't',
+          value: waterTexture,
+        },
         grass: {
           type: 't',
           value: grassTexture,
@@ -117,7 +127,7 @@ export default class Terrain extends Vue {
 
   private animate() {
     this.requestAnimationID = requestAnimationFrame(this.animate);
-    this.material.uniforms.time.value = 0.0004 * (Date.now() - this.start);
+    this.material.uniforms.time.value = 0.00004 * (Date.now() - this.start);
 
     this.controls.update();
     this.renderer.render(this.scene, this.camera);
