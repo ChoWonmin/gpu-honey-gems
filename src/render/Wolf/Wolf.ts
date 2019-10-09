@@ -24,6 +24,8 @@ export default class Wolf extends Vue {
   private requestAnimationID: number = 0;
 
   private loader: THREE.ObjectLoader = new TDSLoader();
+  private light: THREE.Light = new THREE.PointLight(0xffffff, 3.5, 15);
+  private light2: THREE.Light = new THREE.PointLight(0xffffff, 3.5, 15);
 
   private width: number = -1;
   private height: number = -1;
@@ -38,34 +40,70 @@ export default class Wolf extends Vue {
 
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(
-      70,
+      45,
       this.width / this.height,
       1,
-      150,
+      1000,
     );
-    this.camera.position.z = 10;
-
-    this.material = new THREE.RawShaderMaterial({
-      uniforms: {
-        time: { type: 'f', value: 0.0 },
-      },
-      vertexShader: vs,
-      fragmentShader: fs,
-      side: THREE.DoubleSide,
+    this.camera.position.z = 20;
+    this.material = new THREE.MeshBasicMaterial({
+      color: 0x9f9dba,
     });
 
-    const geometry = new THREE.PlaneBufferGeometry(10, 10);
+    const sphere = new THREE.Mesh(
+      new THREE.SphereBufferGeometry(0.3, 12, 6),
+      new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+      }),
+    );
+    // @ts-ignore
+    sphere.material.color.multiplyScalar(1.5);
 
-    const mesh = new THREE.Mesh(geometry, this.material);
-    this.scene.add(mesh);
+    this.light.castShadow = true;
+    // @ts-ignore
+    this.light.shadow.camera.near = 1;
+    // @ts-ignore
+    this.light.shadow.camera.far = 60;
+    this.light.shadow.bias = -0.005;
+    this.light.add(sphere);
 
-    this.loader.load('models/wolf_3ds/Wolf_3ds.3ds', (obj) => {
+    this.light2.castShadow = true;
+    // @ts-ignore
+    this.light2.shadow.camera.near = 1;
+    // @ts-ignore
+    this.light2.shadow.camera.far = 60;
+    this.light2.shadow.bias = -0.005;
+    this.light2.add(sphere.clone());
+    this.scene.add(this.light);
+    this.scene.add(this.light2);
+
+    const plane = new THREE.Mesh(
+      new THREE.BoxBufferGeometry(20, 20, 20),
+      new THREE.MeshPhongMaterial({
+        color: 0x3b3b3b,
+        shininess: 10,
+        specular: 0x444444,
+        side: THREE.BackSide,
+      }),
+    );
+    plane.castShadow = true;
+    plane.receiveShadow = true;
+    this.scene.add(plane);
+
+    this.loader.load('models/wolf_3ds/Wolf_3ds.3ds', (obj: THREE.Object3D) => {
+      obj.scale = new THREE.Vector3(5, 5, 5);
+      obj.translateZ(-2);
+      obj.castShadow = true;
+      obj.receiveShadow = true;
+
       this.scene.add(obj);
     });
 
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
     });
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.BasicShadowMap;
 
     this.renderer.setSize(this.width, this.height);
 
@@ -77,7 +115,19 @@ export default class Wolf extends Vue {
 
   private animate() {
     this.requestAnimationID = requestAnimationFrame(this.animate);
-    this.material.uniforms.time.value = 0.00004 * (Date.now() - this.start);
+    const time = 0.001 * (Date.now() - this.start);
+    const radius = 6;
+
+    this.light.position.set(
+      radius * Math.sin(time),
+      0,
+      radius * Math.cos(time),
+    );
+    this.light2.position.set(
+      0,
+      radius * Math.cos(time),
+      radius * Math.sin(time),
+    );
 
     this.controls.update();
     this.renderer.render(this.scene, this.camera);
