@@ -7,6 +7,10 @@
         .item-list.pl-2
           .subtitle-2.link(@click="$router.push({name: 'terrain'})") Terrain
       .group.py-2
+        .title Lighting
+        .item-list.pl-2
+          .subtitle-2.link(@click="$router.push({name: 'wolf'})") Wolf    
+      .group.py-2
         .title Geometry Buffer
         .item-list.pl-2
           .subtitle-2.link(@click="$router.push({name: 'cubeGeoBuffer'})") Cube

@@ -57,5 +57,10 @@ export default new Router({
       name: 'terrain',
       component: () => import('./render/Terrain'),
     },
+    {
+      path: '/Wolf',
+      name: 'wolf',
+      component: () => import('./render/Wolf'),
+    },
   ],
 });
