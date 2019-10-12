@@ -68,18 +68,7 @@ export default class Basis extends Vue {
     const floor = new THREE.Mesh(geometry, this.material);
     this.scene.add(floor);
 
-    for (let i = -2; i < 3; i++) {
-      const ball = new Particle(
-        new SphereGeometry(100 * (i + 3)),
-        new MeshBasicMaterial({
-          color: 0x9f9dba,
-        }),
-        new THREE.Vector3(1500 * i, 2000, 0),
-      );
-
-      this.particles.push(ball);
-      this.scene.add(ball.getMesh());
-    }
+    this.initParticle();
 
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -93,6 +82,24 @@ export default class Basis extends Vue {
     }
   }
 
+  private initParticle() {
+    for (let i = -2; i < 3; i++) {
+      const radius = 100 * (i + 3);
+
+      const ball = new Particle(
+        new SphereGeometry(radius),
+        new MeshBasicMaterial({
+          color: 0x9f9dba,
+        }),
+        new THREE.Vector3(1500 * i, 2000, 0),
+      );
+      ball.radius = radius;
+
+      this.particles.push(ball);
+      this.scene.add(ball.getMesh());
+    }
+  }
+
   private frame() {
     for (const particle of this.particles) {
       particle.clearForce();
@@ -103,16 +110,19 @@ export default class Basis extends Vue {
       particle.addForce(gravity);
 
       // 항력
-      // const drag =
-      // this.airDrag * particle.velocity.length() * particle.velocity.length();
-
-      // const air = particle.velocity.clone().multiplyScalar(-this.airDrag);
-      // particle.addForce(air);
+      const frontFace = particle.radius;
+      const drag =
+        (this.airDrag *
+          particle.velocity.length() *
+          particle.velocity.length()) /
+        frontFace;
+      const air = particle.velocity.clone().multiplyScalar(-drag);
+      particle.addForce(air);
 
       particle.eval();
 
-      if (particle.mesh.position.y < 100) {
-        particle.mesh.position.y = 100;
+      if (particle.mesh.position.y < particle.radius) {
+        particle.mesh.position.y = particle.radius;
       }
     }
   }

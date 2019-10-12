@@ -10,7 +10,7 @@ export default class Particle {
   public mass: number;
   public force: THREE.Vector3;
 
-  public frontFace: number = 1;
+  public radius: number = 1;
 
   constructor(
     geometry: THREE.Geometry,
