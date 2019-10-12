@@ -24,12 +24,20 @@ export default class Basis extends Vue {
 
   private width: number = -1;
   private height: number = -1;
-  private start: number = -1;
+
+  private dt: number = 0;
+  private airDrag: number = 0.03;
+  private particle: Particle = new Particle(
+    new SphereGeometry(100),
+    new MeshBasicMaterial({
+      color: 0x9f9dba,
+    }),
+    new THREE.Vector3(0, 2000, 0),
+  );
 
   private init() {
     const container = document.getElementById('container') as HTMLElement;
 
-    this.start = Date.now();
     this.width = container.clientWidth;
     this.height = container.clientHeight;
 
@@ -40,33 +48,34 @@ export default class Basis extends Vue {
       1,
       15000,
     );
-    this.camera.position.y = 5;
-    this.camera.position.z = 20;
+    this.camera.position.y = 500;
+    this.camera.position.z = 5000;
+
+    const floorTexture = new THREE.TextureLoader().load(
+      '/img/texture/floor.png',
+    );
+    floorTexture.wrapS = THREE.RepeatWrapping;
+    floorTexture.wrapT = THREE.RepeatWrapping;
 
     this.material = new THREE.RawShaderMaterial({
       uniforms: {
         time: { type: 'f', value: 0.0 },
+        floor: {
+          type: 't',
+          value: floorTexture,
+        },
       },
       vertexShader: vs,
       fragmentShader: fs,
       side: THREE.DoubleSide,
     });
-
-    const geometry = new THREE.PlaneBufferGeometry(200, 200);
+    const geometry = new THREE.PlaneBufferGeometry(15000, 15000);
     geometry.rotateX(Math.PI / 2);
-
     const floor = new THREE.Mesh(geometry, this.material);
     this.scene.add(floor);
 
-    const ball = new Particle(
-      new SphereGeometry(1),
-      new MeshBasicMaterial({
-        color: 0x9f9dba,
-      }),
-      new THREE.Vector3(0, 10, 0),
-    );
-
-    this.scene.add(ball.getMesh());
+    this.particle.mass = 0.05;
+    this.scene.add(this.particle.getMesh());
 
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -80,9 +89,30 @@ export default class Basis extends Vue {
     }
   }
 
+  private frame() {
+    this.particle.clearForce();
+
+    const gravity = new THREE.Vector3(0, -1, 0).multiplyScalar(
+      this.particle.mass * 9.81,
+    );
+    this.particle.addForce(gravity);
+
+    const air = this.particle.velocity.clone().multiplyScalar(-this.airDrag);
+    this.particle.addForce(air);
+
+    this.particle.eval();
+
+    if (this.particle.mesh.position.y < 100) {
+      this.particle.mesh.position.y = 100;
+    }
+  }
+
   private animate() {
     this.requestAnimationID = requestAnimationFrame(this.animate);
-    this.material.uniforms.time.value = 0.00004 * (Date.now() - this.start);
+    this.dt += 0.001;
+    this.material.uniforms.time.value += this.dt;
+
+    this.frame();
 
     this.controls.update();
     this.renderer.render(this.scene, this.camera);

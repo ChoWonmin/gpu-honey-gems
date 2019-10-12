@@ -33,15 +33,14 @@ export default class Particle {
   }
 
   public addForce(force: THREE.Vector3) {
-    this.force.copy(this.force.clone().add(force));
+    this.force.add(force);
   }
 
-  public eval(dt: number) {
+  public eval() {
     // this.velocity += force / mass * dt;
     // this.mesh.position += velocity * dt;
-
-    this.velocity.add(this.force.clone().multiplyScalar(1 / (this.mass * dt)));
-    this.mesh.position.add(this.velocity.clone().multiplyScalar(dt));
+    this.velocity.add(this.force.clone().multiplyScalar(1 / this.mass));
+    this.mesh.position.add(this.velocity);
   }
 
   public getMesh() {
