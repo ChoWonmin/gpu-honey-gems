@@ -27,13 +27,7 @@ export default class Basis extends Vue {
 
   private dt: number = 0;
   private airDrag: number = 0.03;
-  private particle: Particle = new Particle(
-    new SphereGeometry(100),
-    new MeshBasicMaterial({
-      color: 0x9f9dba,
-    }),
-    new THREE.Vector3(0, 2000, 0),
-  );
+  private particles: Particle[] = [];
 
   private init() {
     const container = document.getElementById('container') as HTMLElement;
@@ -74,8 +68,18 @@ export default class Basis extends Vue {
     const floor = new THREE.Mesh(geometry, this.material);
     this.scene.add(floor);
 
-    this.particle.mass = 0.05;
-    this.scene.add(this.particle.getMesh());
+    for (let i = -2; i < 3; i++) {
+      const ball = new Particle(
+        new SphereGeometry(100 * (i + 3)),
+        new MeshBasicMaterial({
+          color: 0x9f9dba,
+        }),
+        new THREE.Vector3(1500 * i, 2000, 0),
+      );
+
+      this.particles.push(ball);
+      this.scene.add(ball.getMesh());
+    }
 
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -90,20 +94,26 @@ export default class Basis extends Vue {
   }
 
   private frame() {
-    this.particle.clearForce();
+    for (const particle of this.particles) {
+      particle.clearForce();
 
-    const gravity = new THREE.Vector3(0, -1, 0).multiplyScalar(
-      this.particle.mass * 9.81,
-    );
-    this.particle.addForce(gravity);
+      const gravity = new THREE.Vector3(0, -1, 0).multiplyScalar(
+        particle.mass * 9.81,
+      );
+      particle.addForce(gravity);
 
-    const air = this.particle.velocity.clone().multiplyScalar(-this.airDrag);
-    this.particle.addForce(air);
+      // 항력
+      // const drag =
+      // this.airDrag * particle.velocity.length() * particle.velocity.length();
 
-    this.particle.eval();
+      // const air = particle.velocity.clone().multiplyScalar(-this.airDrag);
+      // particle.addForce(air);
 
-    if (this.particle.mesh.position.y < 100) {
-      this.particle.mesh.position.y = 100;
+      particle.eval();
+
+      if (particle.mesh.position.y < 100) {
+        particle.mesh.position.y = 100;
+      }
     }
   }
 
