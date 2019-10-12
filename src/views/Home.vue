@@ -9,7 +9,11 @@
       .group.py-2
         .title Lighting
         .item-list.pl-2
-          .subtitle-2.link(@click="$router.push({name: 'wolf'})") Wolf    
+          .subtitle-2.link(@click="$router.push({name: 'wolf'})") Wolf
+      .group.py-2
+        .title Physics
+        .item-list.pl-2
+          .subtitle-2.link(@click="$router.push({name: 'physicsBasis'})") Basis    
       .group.py-2
         .title Geometry Buffer
         .item-list.pl-2

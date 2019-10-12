@@ -62,5 +62,10 @@ export default new Router({
       name: 'wolf',
       component: () => import('./render/Wolf'),
     },
+    {
+      path: '/physics/Basis',
+      name: 'physicsBasis',
+      component: () => import('./render/physics/Basis'),
+    },
   ],
 });
