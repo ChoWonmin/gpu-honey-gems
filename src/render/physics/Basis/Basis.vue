@@ -1,10 +1,25 @@
 <template lang="pug">
   #container
+    v-dialog(v-model="setting" width="320px")
+      v-card
+        v-card-title Setting
+        v-divider
+        .pa-6
+          v-row
+            v-col 공기저항력
+            v-col
+              v-slider(v-model="airDrag" thumb-label="always" :max="10" :min="1")
+          v-row
+            v-col 수중저항력
+            v-col
+              v-slider(v-model="waterDrag" thumb-label="always" :max="30" :min="1")
+        
+    v-btn(fixed bottom right text small color="red" @click="setting=true")
+      v-icon(color="white") mdi-settings
     #controler
       v-btn(fab small color="red" @click="play=!play").mx-1
-        v-icon(color="white") {{play?'mdi-pause':'mdi-play'}}  
-      //- v-btn(fab small color="red" @click="initParticle").mx-1
-      //-   v-icon(color="white") mdi-stop
+        v-icon(color="white") {{play?'mdi-pause':'mdi-play'}}
+      
 </template>
 
 <script lang="ts" src="./Basis.ts">

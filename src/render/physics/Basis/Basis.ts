@@ -26,11 +26,12 @@ export default class Basis extends Vue {
   private height: number = -1;
 
   private dt: number = 0;
-  private airDrag: number = 0.0001;
-  private waterDrag: number = 0.002;
+  private airDrag: number = 1;
+  private waterDrag: number = 20;
   private particles: Particle[] = [];
 
   private play: boolean = false;
+  private setting: boolean = false;
 
   private init() {
     const container = document.getElementById('container') as HTMLElement;
@@ -118,9 +119,10 @@ export default class Basis extends Vue {
       // 항력
       const frontFace = particle.radius / 1000;
       const drag =
-        (particle.mesh.position.y > particle.radius
+        ((particle.mesh.position.y > particle.radius
           ? this.airDrag
-          : this.waterDrag) *
+          : this.waterDrag) /
+          10000) *
         particle.velocity.length() *
         particle.velocity.length() *
         frontFace;
