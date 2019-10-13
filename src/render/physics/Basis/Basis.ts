@@ -27,7 +27,8 @@ export default class Basis extends Vue {
 
   private dt: number = 0;
   private airDrag: number = 1;
-  private waterDrag: number = 20;
+  private waterDrag: number = 1000;
+  private mass: number = 1000;
   private particles: Particle[] = [];
 
   private play: boolean = false;
@@ -102,6 +103,7 @@ export default class Basis extends Vue {
         new THREE.Vector3(1500 * (i - 2), 4000 + radius, 0),
       );
       ball.radius = radius;
+      ball.mass = this.mass;
 
       this.particles.push(ball);
       this.scene.add(ball.getMesh());
@@ -146,6 +148,7 @@ export default class Basis extends Vue {
         4000 + radius,
         0,
       );
+      this.particles[i].mass = this.mass;
       this.particles[i].force = new THREE.Vector3(0, 0, 0);
       this.particles[i].velocity = new THREE.Vector3(0, 0, 0);
     }

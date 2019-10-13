@@ -8,11 +8,15 @@
           v-row
             v-col 공기저항력
             v-col
-              v-slider(v-model="airDrag" thumb-label="always" :max="10" :min="1")
+              v-slider(v-model="airDrag" thumb-label="always" :max="10" :min="0")
           v-row
             v-col 수중저항력
             v-col
-              v-slider(v-model="waterDrag" thumb-label="always" :max="30" :min="1")
+              v-slider(v-model="waterDrag" thumb-label="always" :max="1500" :min="0")
+          v-row
+            v-col 질량
+            v-col
+              v-slider(v-model="mass" thumb-label="always" :max="2000" :min="1000" @change="reset")    
         
     v-btn(fixed bottom right text small color="red" @click="setting=true")
       v-icon(color="white") mdi-settings
