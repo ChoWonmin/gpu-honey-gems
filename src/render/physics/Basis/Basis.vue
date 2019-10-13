@@ -19,7 +19,8 @@
     #controler
       v-btn(fab small color="red" @click="play=!play").mx-1
         v-icon(color="white") {{play?'mdi-pause':'mdi-play'}}
-      
+      v-btn(fab small color="red" @click="reset").mx-1
+        v-icon(color="white") mdi-stop
 </template>
 
 <script lang="ts" src="./Basis.ts">

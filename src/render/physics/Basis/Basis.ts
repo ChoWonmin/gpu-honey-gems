@@ -46,8 +46,25 @@ export default class Basis extends Vue {
       1,
       15000,
     );
-    this.camera.position.y = 3000;
+    this.camera.position.y = 0;
     this.camera.position.z = 7000;
+
+    this.initObject();
+
+    this.renderer = new THREE.WebGLRenderer({
+      antialias: true,
+    });
+
+    this.renderer.setSize(this.width, this.height);
+
+    if (container) {
+      container.appendChild(this.renderer.domElement);
+      this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    }
+  }
+
+  private initObject() {
+    this.scene.dispose();
 
     const floorTexture = new THREE.TextureLoader().load(
       '/img/texture/water.jpg',
@@ -69,36 +86,20 @@ export default class Basis extends Vue {
       side: THREE.DoubleSide,
     });
     const geometry = new THREE.BoxBufferGeometry(10000, 3000, 3000);
-    // geometry.rotateX(Math.PI / 2);
 
     const floor = new THREE.Mesh(geometry, this.material);
     floor.translateY(-1500);
     this.scene.add(floor);
 
-    this.initParticle();
-
-    this.renderer = new THREE.WebGLRenderer({
-      antialias: true,
-    });
-
-    this.renderer.setSize(this.width, this.height);
-
-    if (container) {
-      container.appendChild(this.renderer.domElement);
-      this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    }
-  }
-
-  private initParticle() {
-    for (let i = -2; i < 3; i++) {
-      const radius = 50 * (i + 3);
+    for (let i = 0; i < 5; i++) {
+      const radius = 50 * (i + 1);
 
       const ball = new Particle(
         new SphereGeometry(radius),
         new MeshBasicMaterial({
           color: 0xff0000,
         }),
-        new THREE.Vector3(1500 * i, 4000, 0),
+        new THREE.Vector3(1500 * (i - 2), 4000 + radius, 0),
       );
       ball.radius = radius;
 
@@ -137,6 +138,31 @@ export default class Basis extends Vue {
     }
   }
 
+  private reset() {
+    for (let i = 0; i < 5; i++) {
+      const radius = 50 * (i + 1);
+      this.particles[i].mesh.position = new THREE.Vector3(
+        1500 * (i - 2),
+        4000 + radius,
+        0,
+      );
+      this.particles[i].force = new THREE.Vector3(0, 0, 0);
+      this.particles[i].velocity = new THREE.Vector3(0, 0, 0);
+    }
+    this.play = false;
+  }
+
+  private dispose() {
+    this.scene.dispose();
+    this.renderer.dispose();
+    this.renderer.forceContextLoss();
+    window.cancelAnimationFrame(this.requestAnimationID);
+    // @ts-ignore release force
+    this.renderer.domElement = null;
+    // @ts-ignore release force
+    this.renderer = null;
+  }
+
   private animate() {
     this.requestAnimationID = requestAnimationFrame(this.animate);
     this.dt += 0.001;
@@ -156,13 +182,6 @@ export default class Basis extends Vue {
   }
 
   private beforeDestroy() {
-    this.scene.dispose();
-    this.renderer.dispose();
-    this.renderer.forceContextLoss();
-    window.cancelAnimationFrame(this.requestAnimationID);
-    // @ts-ignore release force
-    this.renderer.domElement = null;
-    // @ts-ignore release force
-    this.renderer = null;
+    this.dispose();
   }
 }
