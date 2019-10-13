@@ -42,11 +42,11 @@ export default class Basis extends Vue {
       1,
       15000,
     );
-    this.camera.position.y = 500;
-    this.camera.position.z = 5000;
+    this.camera.position.y = 3000;
+    this.camera.position.z = 7000;
 
     const floorTexture = new THREE.TextureLoader().load(
-      '/img/texture/floor.png',
+      '/img/texture/water.jpg',
     );
     floorTexture.wrapS = THREE.RepeatWrapping;
     floorTexture.wrapT = THREE.RepeatWrapping;
@@ -59,13 +59,16 @@ export default class Basis extends Vue {
           value: floorTexture,
         },
       },
+      transparent: true,
       vertexShader: vs,
       fragmentShader: fs,
       side: THREE.DoubleSide,
     });
-    const geometry = new THREE.PlaneBufferGeometry(15000, 15000);
-    geometry.rotateX(Math.PI / 2);
+    const geometry = new THREE.BoxBufferGeometry(10000, 3000, 3000);
+    // geometry.rotateX(Math.PI / 2);
+
     const floor = new THREE.Mesh(geometry, this.material);
+    floor.translateY(-1500);
     this.scene.add(floor);
 
     this.initParticle();
@@ -84,14 +87,14 @@ export default class Basis extends Vue {
 
   private initParticle() {
     for (let i = -2; i < 3; i++) {
-      const radius = 100 * (i + 3);
+      const radius = 50 * (i + 3);
 
       const ball = new Particle(
         new SphereGeometry(radius),
         new MeshBasicMaterial({
-          color: 0x9f9dba,
+          color: 0xff0000,
         }),
-        new THREE.Vector3(1500 * i, 2000, 0),
+        new THREE.Vector3(1500 * i, 4000, 0),
       );
       ball.radius = radius;
 
@@ -110,11 +113,11 @@ export default class Basis extends Vue {
       particle.addForce(gravity);
 
       // 항력
-      const frontFace = particle.radius;
+      const frontFace = particle.radius / 1000;
       const drag =
-        (this.airDrag *
-          particle.velocity.length() *
-          particle.velocity.length()) /
+        this.airDrag *
+        particle.velocity.length() *
+        particle.velocity.length() *
         frontFace;
       const air = particle.velocity.clone().multiplyScalar(-drag);
       particle.addForce(air);
