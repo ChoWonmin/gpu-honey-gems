@@ -8,15 +8,25 @@
           v-row
             v-col 공기저항력
             v-col
-              v-slider(v-model="airDrag" thumb-label="always" :max="10" :min="0")
+              v-slider(v-model="airDrag" thumb-label="always" :max="1500" :min="900" @change="reset")
+            v-col g/m³
+                
           v-row
             v-col 수중저항력
             v-col
-              v-slider(v-model="waterDrag" thumb-label="always" :max="1500" :min="0")
+              v-slider(v-model="waterDrag" thumb-label="always" :max="1500" :min="700" @change="reset")
+            v-col kg/m³  
           v-row
             v-col 질량
             v-col
-              v-slider(v-model="mass" thumb-label="always" :max="2000" :min="1000" @change="reset")    
+              v-slider(v-model="mass" thumb-label="always" :max="2000" :min="800" @change="reset")
+            v-col g
+          v-divider  
+          v-row
+            v-col 물체 반지름
+            v-col
+              v-slider(v-model="radius" thumb-label="always" :max="70" :min="30" @change="reset")
+            v-col cm
         
     v-btn(fixed bottom right text small color="red" @click="setting=true")
       v-icon(color="white") mdi-settings

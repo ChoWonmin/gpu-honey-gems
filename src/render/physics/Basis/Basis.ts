@@ -26,10 +26,11 @@ export default class Basis extends Vue {
   private height: number = -1;
 
   private dt: number = 0;
-  private airDrag: number = 1;
+  private airDrag: number = 1200;
   private waterDrag: number = 1000;
   private mass: number = 1000;
   private particles: Particle[] = [];
+  private radius: number = 50;
 
   private play: boolean = false;
   private setting: boolean = false;
@@ -93,7 +94,7 @@ export default class Basis extends Vue {
     this.scene.add(floor);
 
     for (let i = 0; i < 5; i++) {
-      const radius = 50 * (i + 1);
+      const radius = this.radius * (i + 1);
 
       const ball = new Particle(
         new SphereGeometry(radius),
@@ -120,15 +121,14 @@ export default class Basis extends Vue {
       particle.addForce(gravity);
 
       // 항력
-      const frontFace = particle.radius / 1000;
+      const frontFace = (particle.radius * particle.radius) / 250000;
       const drag =
-        ((particle.mesh.position.y > particle.radius
-          ? this.airDrag
-          : this.waterDrag) /
-          10000) *
-        particle.velocity.length() *
-        particle.velocity.length() *
-        frontFace;
+        particle.mesh.position.y > particle.radius
+          ? this.airDrag / 10000000
+          : (this.waterDrag / 10000) *
+            particle.velocity.length() *
+            particle.velocity.length() *
+            frontFace;
       const dragForce = particle.velocity.clone().multiplyScalar(-drag);
       particle.addForce(dragForce);
 
@@ -142,7 +142,7 @@ export default class Basis extends Vue {
 
   private reset() {
     for (let i = 0; i < 5; i++) {
-      const radius = 50 * (i + 1);
+      const radius = this.radius * (i + 1);
       this.particles[i].mesh.position = new THREE.Vector3(
         1500 * (i - 2),
         4000 + radius,
