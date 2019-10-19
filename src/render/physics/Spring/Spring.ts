@@ -3,23 +3,23 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three-orbitcontrols-ts';
 
 // @ts-ignore
-import vs from '!!raw-loader!./Basis.vert';
+import vs from '!!raw-loader!./Spring.vert';
 // @ts-ignore
-import fs from '!!raw-loader!./Basis.frag';
+import fs from '!!raw-loader!./Spring.frag';
 import { Vector3, SphereGeometry, MeshBasicMaterial } from 'three';
 import Particle from '@/util/Particle';
+import Elastic from '@/util/Elastic';
 
 @Component({
   components: {
     //
   },
 })
-export default class Basis extends Vue {
+export default class Spring extends Vue {
   private camera: any = null;
   private scene: any = null;
   private renderer: any = null;
   private controls: any = null;
-  private material: any = null;
   private requestAnimationID: number = 0;
 
   private width: number = -1;
@@ -30,7 +30,8 @@ export default class Basis extends Vue {
   private waterDrag: number = 1000;
   private mass: number = 1200;
   private particles: Particle[] = [];
-  private radius: number = 40;
+  private elastics: Elastic[] = [];
+  private radius: number = 50;
 
   private play: boolean = false;
   private setting: boolean = false;
@@ -46,10 +47,10 @@ export default class Basis extends Vue {
       70,
       this.width / this.height,
       1,
-      15000,
+      25000,
     );
     this.camera.position.y = 0;
-    this.camera.position.z = 7000;
+    this.camera.position.z = 10000;
 
     this.initObject();
 
@@ -66,48 +67,27 @@ export default class Basis extends Vue {
   }
 
   private initObject() {
-    this.scene.dispose();
-
-    const floorTexture = new THREE.TextureLoader().load(
-      '/img/texture/water.jpg',
-    );
-    floorTexture.wrapS = THREE.RepeatWrapping;
-    floorTexture.wrapT = THREE.RepeatWrapping;
-
-    this.material = new THREE.RawShaderMaterial({
-      uniforms: {
-        time: { type: 'f', value: 0.0 },
-        floor: {
-          type: 't',
-          value: floorTexture,
-        },
-      },
-      transparent: true,
-      vertexShader: vs,
-      fragmentShader: fs,
-      side: THREE.DoubleSide,
-    });
-    const geometry = new THREE.BoxBufferGeometry(10000, 3000, 3000);
-
-    const floor = new THREE.Mesh(geometry, this.material);
-    floor.translateY(-1500);
-    this.scene.add(floor);
-
-    for (let i = 0; i < 5; i++) {
-      const radius = this.radius * (i + 1);
+    for (let i = 0; i < 2; i++) {
+      const radius = this.radius;
 
       const ball = new Particle(
         new SphereGeometry(radius),
         new MeshBasicMaterial({
           color: 0xff0000,
         }),
-        new THREE.Vector3(1500 * (i - 2), 4000 + radius, 0),
+        new THREE.Vector3(1500 * (i - 2), 2000, 0),
       );
       ball.radius = radius;
       ball.mass = this.mass;
 
       this.particles.push(ball);
       this.scene.add(ball.getMesh());
+    }
+
+    for (let i = 0; i < 1; i++) {
+      const elastic = new Elastic(i, i + 1, this.particles);
+      this.elastics.push(elastic);
+      // this.scene.add(elastic.getMesh());
     }
   }
 
@@ -121,31 +101,36 @@ export default class Basis extends Vue {
       particle.addForce(gravity);
 
       // 항력
-      const frontFace = (particle.radius * particle.radius) / 250000;
-      const drag =
-        particle.mesh.position.y > particle.radius
-          ? this.airDrag / 10000000
-          : (this.waterDrag / 10000) *
-            particle.velocity.length() *
-            particle.velocity.length() *
-            frontFace;
-      const dragForce = particle.velocity.clone().multiplyScalar(-drag);
-      particle.addForce(dragForce);
-
-      particle.eval();
-
-      if (particle.mesh.position.y < particle.radius - 3000) {
-        particle.mesh.position.y = particle.radius - 3000;
-      }
+      // const frontFace = (particle.radius * particle.radius) / 250000;
+      // const drag =
+      //   particle.mesh.position.y > particle.radius
+      //     ? this.airDrag / 10000000
+      //     : (this.waterDrag / 10000) *
+      //       particle.velocity.length() *
+      //       particle.velocity.length() *
+      //       frontFace;
+      // const dragForce = particle.velocity.clone().multiplyScalar(-drag);
+      // particle.addForce(dragForce);
     }
+
+    for (const elastic of this.elastics) {
+      elastic.applyForce(this.particles);
+    }
+
+    for (const particle of this.particles) {
+      particle.eval();
+    }
+
+    this.particles[0].velocity = new THREE.Vector3(0, 0, 0);
+    this.particles[0].getMesh().position = new THREE.Vector3(-3000, 2000, 0);
   }
 
   private reset() {
-    for (let i = 0; i < 5; i++) {
-      const radius = this.radius * (i + 1);
+    for (let i = 0; i < 2; i++) {
+      const radius = this.radius;
       this.particles[i].mesh.position = new THREE.Vector3(
         1500 * (i - 2),
-        4000 + radius,
+        2000,
         0,
       );
       this.particles[i].mass = this.mass;
@@ -169,7 +154,6 @@ export default class Basis extends Vue {
   private animate() {
     this.requestAnimationID = requestAnimationFrame(this.animate);
     this.dt += 0.001;
-    this.material.uniforms.time.value += this.dt;
 
     if (this.play) {
       this.frame();

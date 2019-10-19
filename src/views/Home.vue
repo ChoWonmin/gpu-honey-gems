@@ -14,6 +14,8 @@
         .title Physics
         .item-list.pl-2
           .subtitle-2.link(@click="$router.push({name: 'physicsBasis'})") Basis    
+        .item-list.pl-2
+          .subtitle-2.link(@click="$router.push({name: 'physicsSpring'})") Spring      
       .group.py-2
         .title Geometry Buffer
         .item-list.pl-2
@@ -35,11 +37,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-@Component({
-  components: {
-    //
-  }
-})
+@Component({})
 export default class Home extends Vue {}
 </script>
 

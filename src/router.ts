@@ -67,5 +67,10 @@ export default new Router({
       name: 'physicsBasis',
       component: () => import('./render/physics/Basis'),
     },
+    {
+      path: '/physics/Spring',
+      name: 'physicsSpring',
+      component: () => import('./render/physics/Spring'),
+    },
   ],
 });

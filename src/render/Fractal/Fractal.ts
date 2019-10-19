@@ -5,7 +5,7 @@ import Shader from './Shader';
 @Component({
   components: {
     //
-  }
+  },
 })
 export default class Fractal extends Vue {
   private camera: any = null;
@@ -28,7 +28,7 @@ export default class Fractal extends Vue {
       50,
       this.width / this.height,
       1,
-      10
+      10,
     );
     this.camera.position.z = 2;
 
@@ -54,27 +54,27 @@ export default class Fractal extends Vue {
     geometry.maxInstancedCount = instances;
     geometry.addAttribute(
       'position',
-      new THREE.Float32BufferAttribute(positions, 3)
+      new THREE.Float32BufferAttribute(positions, 3),
     );
     geometry.addAttribute(
       'offset',
-      new THREE.InstancedBufferAttribute(new Float32Array(offsets), 3)
+      new THREE.InstancedBufferAttribute(new Float32Array(offsets), 3),
     );
     geometry.addAttribute(
       'color',
-      new THREE.InstancedBufferAttribute(new Float32Array(colors), 4)
+      new THREE.InstancedBufferAttribute(new Float32Array(colors), 4),
     );
 
     // material
     const material = new THREE.RawShaderMaterial({
       uniforms: {
         time: { value: 1.0 },
-        sineTime: { value: 1.0 }
+        sineTime: { value: 1.0 },
       },
       vertexShader: Shader.vertexShader,
       fragmentShader: Shader.fragmentShader,
       side: THREE.DoubleSide,
-      transparent: true
+      transparent: true,
     });
 
     const mesh = new THREE.Mesh(geometry, material);
