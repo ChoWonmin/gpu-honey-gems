@@ -13,8 +13,8 @@ export default class Elastic {
   });
   public line: THREE.Line = new THREE.Line(this.geometry, this.material);
 
-  public ks: number = 0.005;
-  public kd: number = 0;
+  public ks: number = 50;
+  public kd: number = 1;
   private i: number = 0;
   private j: number = 0;
   private length: number = 0;
@@ -44,13 +44,19 @@ export default class Elastic {
     const iPos = this.particles[this.i].mesh.position.clone();
     const jPos = this.particles[this.j].mesh.position.clone();
 
+    const iv = this.particles[this.i].velocity;
+    const jv = this.particles[this.j].velocity;
+
     const dx: THREE.Vector3 = iPos.add(jPos.multiplyScalar(-1));
-    const dv: THREE.Vector3 = iPos.add(jPos.multiplyScalar(-1));
+    const dv: THREE.Vector3 = iv.add(jv.multiplyScalar(-1));
 
     const lx: number = dx.length();
 
-    const spring: number =
-      -(this.ks * (lx - this.length) + (dv.dot(dx) * this.kd) / lx) / lx;
+    const viscous: number = this.ks * (lx - this.length);
+    const damp: number = this.kd * (dv.dot(dx) / lx);
+
+    const spring: number = -(viscous + damp) / lx;
+
     const force: THREE.Vector3 = dx.multiplyScalar(spring);
 
     this.particles[this.i].addForce(force);

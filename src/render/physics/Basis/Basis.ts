@@ -111,7 +111,7 @@ export default class Basis extends Vue {
     }
   }
 
-  private frame() {
+  private frame(dt: number) {
     for (const particle of this.particles) {
       particle.clearForce();
 
@@ -132,7 +132,7 @@ export default class Basis extends Vue {
       const dragForce = particle.velocity.clone().multiplyScalar(-drag);
       particle.addForce(dragForce);
 
-      particle.eval();
+      particle.eval(dt);
 
       if (particle.mesh.position.y < particle.radius - 3000) {
         particle.mesh.position.y = particle.radius - 3000;
@@ -172,7 +172,8 @@ export default class Basis extends Vue {
     this.material.uniforms.time.value += this.dt;
 
     if (this.play) {
-      this.frame();
+      this.dt += 0.00001;
+      this.frame(this.dt);
     }
 
     this.controls.update();

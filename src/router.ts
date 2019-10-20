@@ -72,5 +72,10 @@ export default new Router({
       name: 'physicsSpring',
       component: () => import('./render/physics/Spring'),
     },
+    {
+      path: '/physics/ClothSystem',
+      name: 'physicsClothSystem',
+      component: () => import('./render/physics/ClothSystem'),
+    },
   ],
 });

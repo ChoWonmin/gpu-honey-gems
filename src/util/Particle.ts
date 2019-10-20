@@ -38,11 +38,11 @@ export default class Particle {
     this.force.add(force);
   }
 
-  public eval() {
+  public eval(dt: number) {
     // this.velocity += force / mass * dt;
     // this.mesh.position += velocity * dt;
-    this.velocity.add(this.force.clone().multiplyScalar(1 / this.mass));
-    this.mesh.position.add(this.velocity);
+    this.velocity.add(this.force.clone().multiplyScalar(dt / this.mass));
+    this.mesh.position.add(this.velocity.multiplyScalar(dt));
   }
 
   public getMesh() {
