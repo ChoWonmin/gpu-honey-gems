@@ -124,8 +124,8 @@ export default class Basis extends Vue {
       const frontFace = (particle.radius * particle.radius) / 250000;
       const drag =
         particle.mesh.position.y > particle.radius
-          ? this.airDrag / 10000000
-          : (this.waterDrag / 10000) *
+          ? this.airDrag / 1000000
+          : (this.waterDrag / 1000) *
             particle.velocity.length() *
             particle.velocity.length() *
             frontFace;
@@ -141,6 +141,7 @@ export default class Basis extends Vue {
   }
 
   private reset() {
+    this.dt = 0;
     for (let i = 0; i < 5; i++) {
       const radius = this.radius * (i + 1);
       this.particles[i].mesh.position = new THREE.Vector3(
@@ -168,12 +169,13 @@ export default class Basis extends Vue {
 
   private animate() {
     this.requestAnimationID = requestAnimationFrame(this.animate);
-    this.dt += 0.001;
     this.material.uniforms.time.value += this.dt;
 
     if (this.play) {
-      this.dt += 0.00001;
-      this.frame(this.dt);
+      for (let i = 0; i < 5; i++) {
+        this.dt += 0.002;
+        this.frame(this.dt);
+      }
     }
 
     this.controls.update();
