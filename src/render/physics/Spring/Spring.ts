@@ -25,13 +25,12 @@ export default class Spring extends Vue {
   private width: number = -1;
   private height: number = -1;
 
-  private dt: number = 0;
-  private airDrag: number = 1200;
-  private waterDrag: number = 1000;
-  private mass: number = 1200;
+  private ceil: number = 400;
+  private airDrag: number = 0.03;
+  private mass: number = 0.05;
   private particles: Particle[] = [];
   private elastics: Elastic[] = [];
-  private radius: number = 50;
+  private radius: number = 20;
 
   private play: boolean = false;
   private setting: boolean = false;
@@ -46,11 +45,11 @@ export default class Spring extends Vue {
     this.camera = new THREE.PerspectiveCamera(
       70,
       this.width / this.height,
-      1,
-      25000,
+      0.1,
+      3000,
     );
     this.camera.position.y = 0;
-    this.camera.position.z = 10000;
+    this.camera.position.z = 1000;
 
     this.initObject();
 
@@ -75,7 +74,7 @@ export default class Spring extends Vue {
         new MeshBasicMaterial({
           color: 0xff0000,
         }),
-        new THREE.Vector3(1500 * (i - 2), 2000, 0),
+        new THREE.Vector3(100 * (i - 2), this.ceil, 0),
       );
       ball.radius = radius;
       ball.mass = this.mass;
@@ -87,7 +86,7 @@ export default class Spring extends Vue {
     for (let i = 0; i < 1; i++) {
       const elastic = new Elastic(i, i + 1, this.particles);
       this.elastics.push(elastic);
-      // this.scene.add(elastic.getMesh());
+      this.scene.add(elastic.getMesh());
     }
   }
 
@@ -113,24 +112,32 @@ export default class Spring extends Vue {
       // particle.addForce(dragForce);
     }
 
-    for (const elastic of this.elastics) {
-      elastic.applyForce(this.particles);
-    }
+    // for (const elastic of this.elastics) {
+    //   elastic.applyForce();
+    // }
 
     for (const particle of this.particles) {
       particle.eval();
     }
 
+    for (const elastic of this.elastics) {
+      elastic.update();
+    }
+
     this.particles[0].velocity = new THREE.Vector3(0, 0, 0);
-    this.particles[0].getMesh().position = new THREE.Vector3(-3000, 2000, 0);
+    this.particles[0].getMesh().position = new THREE.Vector3(
+      -200,
+      this.ceil,
+      0,
+    );
   }
 
   private reset() {
     for (let i = 0; i < 2; i++) {
       const radius = this.radius;
       this.particles[i].mesh.position = new THREE.Vector3(
-        1500 * (i - 2),
-        2000,
+        100 * (i - 2),
+        this.ceil,
         0,
       );
       this.particles[i].mass = this.mass;
@@ -138,6 +145,10 @@ export default class Spring extends Vue {
       this.particles[i].velocity = new THREE.Vector3(0, 0, 0);
     }
     this.play = false;
+
+    for (const elastic of this.elastics) {
+      elastic.update();
+    }
   }
 
   private dispose() {
@@ -153,7 +164,6 @@ export default class Spring extends Vue {
 
   private animate() {
     this.requestAnimationID = requestAnimationFrame(this.animate);
-    this.dt += 0.001;
 
     if (this.play) {
       this.frame();

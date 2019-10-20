@@ -12,11 +12,6 @@
             v-col g/m³
                 
           v-row
-            v-col 수중저항력
-            v-col
-              v-slider(v-model="waterDrag" thumb-label="always" :max="1500" :min="700" @change="reset")
-            v-col kg/m³  
-          v-row
             v-col 질량
             v-col
               v-slider(v-model="mass" thumb-label="always" :max="2000" :min="800" @change="reset")
