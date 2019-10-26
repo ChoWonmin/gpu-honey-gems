@@ -6,13 +6,11 @@
         v-divider
         .pa-6
         
-    v-btn(fixed bottom right text small color="red" @click="setting=true")
-      v-icon(color="white") mdi-settings
+    //- v-btn(fixed bottom right text small color="red" @click="setting=true")
+    //-   v-icon(color="white") mdi-settings
     #controler
       v-btn(fab small color="red" @click="play=!play").mx-1
         v-icon(color="white") {{play?'mdi-pause':'mdi-play'}}
-      v-btn(fab small color="red").mx-1
-        v-icon(color="white") mdi-stop
 </template>
 
 <script lang="ts" src="./ClothSystem.ts">
