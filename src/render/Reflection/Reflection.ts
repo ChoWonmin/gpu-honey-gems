@@ -58,7 +58,7 @@ export default class Reflection extends Vue {
       envMap: this.mirrorCamera.renderTarget
     });
 
-    const geometry = new THREE.SphereGeometry(200, 50, 50);
+    const geometry = new THREE.SphereGeometry(200, 50, 20);
 
     const mirror = new THREE.Mesh(geometry, this.material);
     mirror.position.set(0, 100, 0);
@@ -73,7 +73,7 @@ export default class Reflection extends Vue {
     if (container) {
       container.appendChild(this.renderer.domElement);
       this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-      this.controls.enableZoom = false;
+      // this.controls.enableZoom = false;
     }
   }
 
