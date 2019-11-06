@@ -77,5 +77,11 @@ export default new Router({
       name: 'physicsClothSystem',
       component: () => import('./render/physics/ClothSystem'),
     },
+
+    {
+      path: '/Reflection',
+      name: 'reflection',
+      component: () => import('./render/Reflection'),
+    },
   ],
 });

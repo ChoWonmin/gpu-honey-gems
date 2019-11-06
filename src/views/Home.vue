@@ -10,6 +10,8 @@
         .title Lighting
         .item-list.pl-2
           .subtitle-2.link(@click="$router.push({name: 'wolf'})") Wolf
+        .item-list.pl-2
+          .subtitle-2.link(@click="$router.push({name: 'reflection'})") Reflection  
       .group.py-2
         .title Physics
         .item-list.pl-2
@@ -33,7 +35,7 @@
       .group.py-2
         .title Animation
         .item-list.pl-2
-          .subtitle-2.link(@click="$router.push({name: 'space'})") Stars    
+          .subtitle-2.link(@click="$router.push({name: 'space'})") Stars
 </template>
 
 <script lang="ts">
