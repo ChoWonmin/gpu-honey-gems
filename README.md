@@ -25,3 +25,5 @@ https://developer.nvidia.com/gpugems/GPUGems3/gpugems3_pref01.html
 https://threejs.org/examples/webgl_terrain_dynamic.html
 
 https://www.clicktorelease.com/blog/vertex-displacement-noise-3d-webgl-glsl-three-js/
+
+https://youtu.be/Cowu77ZuROk
