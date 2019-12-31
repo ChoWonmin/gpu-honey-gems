@@ -5,7 +5,7 @@ import { OrbitControls } from 'three-orbitcontrols-ts';
 @Component({
   components: {
     //
-  }
+  },
 })
 export default class Reflection extends Vue {
   private camera: any = null;
@@ -24,7 +24,7 @@ export default class Reflection extends Vue {
     'posy.jpg',
     'negy.jpg',
     'posz.jpg',
-    'negz.jpg'
+    'negz.jpg',
   ];
   private cubeLoader: THREE.CubeTextureLoader = new THREE.CubeTextureLoader();
 
@@ -42,7 +42,7 @@ export default class Reflection extends Vue {
       70,
       this.width / this.height,
       1,
-      5000
+      5000,
     );
     this.camera.position.set(0, 400, 1000);
 
@@ -50,12 +50,11 @@ export default class Reflection extends Vue {
       .setPath(this.cubePath)
       .load(this.cubeUrl);
 
-    this.mirrorCamera;
     this.mirrorCamera.position.set(0, 100, 0);
     this.scene.add(this.mirrorCamera);
 
     this.material = new THREE.MeshBasicMaterial({
-      envMap: this.mirrorCamera.renderTarget
+      envMap: this.mirrorCamera.renderTarget,
     });
 
     const geometry = new THREE.SphereGeometry(200, 50, 20);
@@ -65,7 +64,7 @@ export default class Reflection extends Vue {
     this.scene.add(mirror);
 
     this.renderer = new THREE.WebGLRenderer({
-      antialias: true
+      antialias: true,
     });
 
     this.renderer.setSize(this.width, this.height);
@@ -73,7 +72,6 @@ export default class Reflection extends Vue {
     if (container) {
       container.appendChild(this.renderer.domElement);
       this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-      // this.controls.enableZoom = false;
     }
   }
 
