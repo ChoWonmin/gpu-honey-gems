@@ -31,7 +31,9 @@
         .item-list.pl-2
           .subtitle-2.link(@click="$router.push({name: 'liquid'})") Liquid
         .item-list.pl-2
-          .subtitle-2.link(@click="$router.push({name: 'fire'})") Fire  
+          .subtitle-2.link(@click="$router.push({name: 'fire'})") Fire
+        .item-list.pl-2
+          .subtitle-2.link(@click="$router.push({name: 'moon'})") Moon  
       .group.py-2
         .title Animation
         .item-list.pl-2
