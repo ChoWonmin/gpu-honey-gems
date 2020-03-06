@@ -79,6 +79,11 @@ export default new Router({
       component: () => import('./render/Reflection'),
     },
     {
+      path: '/Hdri',
+      name: 'hdri',
+      component: () => import('./render/Hdri'),
+    },
+    {
       path: '/ArtInstancing',
       name: 'artInstancing',
       component: () => import('./render/Art/Instancing'),

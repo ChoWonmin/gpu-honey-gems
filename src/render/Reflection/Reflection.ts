@@ -38,10 +38,12 @@ export default class Reflection extends Vue {
     this.height = container.clientHeight;
 
     this.scene = new THREE.Scene();
+
     this.camera = new THREE.PerspectiveCamera(70, this.width / this.height, 1, 5000);
     this.camera.position.set(0, 400, 1000);
 
     this.scene.background = this.cubeLoader.setPath(this.cubePath).load(this.cubeUrl);
+
     this.mirrorCamera.position.set(0, 100, 0);
     this.scene.add(this.mirrorCamera);
 
@@ -64,7 +66,6 @@ export default class Reflection extends Vue {
     if (container) {
       container.appendChild(this.renderer.domElement);
       this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-      // this.controls.enableZoom = false;
     }
   }
 
