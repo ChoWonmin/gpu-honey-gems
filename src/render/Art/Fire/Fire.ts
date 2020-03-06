@@ -1,59 +1,55 @@
 import { Component, Vue } from 'vue-property-decorator';
 import * as THREE from 'three';
-import { OrbitControls } from 'three-orbitcontrols-ts';
+
+// @ts-ignore
+import vs from '!!raw-loader!./Fire.vert';
+// @ts-ignore
+import fs from '!!raw-loader!./Fire.frag';
 
 @Component({
   components: {
     //
   },
 })
-export default class Reflection extends Vue {
+export default class Fire extends Vue {
   private camera: any = null;
-  private mirrorCamera: any = new THREE.CubeCamera(1, 1000, 500);
   private scene: any = null;
   private renderer: any = null;
   private controls: any = null;
   private material: any = null;
   private requestAnimationID: number = 0;
 
-  private cubePath: string = '/img/texture/cubemap/lycksele/';
-
-  private cubeUrl: string[] = [
-    'posx.jpg',
-    'negx.jpg',
-    'posy.jpg',
-    'negy.jpg',
-    'posz.jpg',
-    'negz.jpg',
-  ];
-  private cubeLoader: THREE.CubeTextureLoader = new THREE.CubeTextureLoader();
-
   private width: number = -1;
   private height: number = -1;
+  private start: number = -1;
 
   private init() {
     const container = document.getElementById('container') as HTMLElement;
 
+    this.start = Date.now();
     this.width = container.clientWidth;
     this.height = container.clientHeight;
 
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(70, this.width / this.height, 1, 5000);
-    this.camera.position.set(0, 400, 1000);
+    this.camera = new THREE.PerspectiveCamera(30, this.width / this.height, 1, 10000);
+    this.camera.position.z = 100;
 
-    this.scene.background = this.cubeLoader.setPath(this.cubePath).load(this.cubeUrl);
-    this.mirrorCamera.position.set(0, 100, 0);
-    this.scene.add(this.mirrorCamera);
-
-    this.material = new THREE.MeshBasicMaterial({
-      envMap: this.mirrorCamera.renderTarget,
+    this.material = new THREE.RawShaderMaterial({
+      uniforms: {
+        tExplosion: {
+          type: 't',
+          value: new THREE.TextureLoader().load('/img/texture/explosion.png'),
+        },
+        time: { type: 'f', value: 0.0 },
+        weight: { type: 'f', value: 10.0 },
+      },
+      vertexShader: vs,
+      fragmentShader: fs,
+      side: THREE.DoubleSide,
+      transparent: true,
     });
-
-    const geometry = new THREE.SphereGeometry(200, 50, 20);
-
-    const mirror = new THREE.Mesh(geometry, this.material);
-    mirror.position.set(0, 100, 0);
-    this.scene.add(mirror);
+    const mesh = new THREE.Mesh(new THREE.IcosahedronGeometry(20, 5), this.material);
+    this.scene.add(mesh);
 
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -63,16 +59,12 @@ export default class Reflection extends Vue {
 
     if (container) {
       container.appendChild(this.renderer.domElement);
-      this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-      // this.controls.enableZoom = false;
     }
   }
 
   private animate() {
     this.requestAnimationID = requestAnimationFrame(this.animate);
-
-    this.controls.update();
-    this.mirrorCamera.updateCubeMap(this.renderer, this.scene);
+    this.material.uniforms.time.value = 0.0004 * (Date.now() - this.start);
     this.renderer.render(this.scene, this.camera);
   }
 

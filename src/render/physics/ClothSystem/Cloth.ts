@@ -14,7 +14,9 @@ export default class Cloth {
     this.w = w;
     this.h = h;
 
-    let u, v;
+    let u;
+    let v;
+
     for (v = 0; v <= h; v++) {
       for (u = 0; u <= w; u++) {
         this.particles.push(new Particle(u / w, v / h, 0, 0.01));

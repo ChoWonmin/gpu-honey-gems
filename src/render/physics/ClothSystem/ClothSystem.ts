@@ -36,11 +36,7 @@ export default class ClothSystem extends Vue {
   private ySegs: number = 10;
   private cloth: Cloth = new Cloth(this.xSegs, this.ySegs);
   private GRAVITY: number = 981 * 1.4;
-  private gravity: THREE.Vector3 = new THREE.Vector3(
-    0,
-    -this.GRAVITY,
-    0,
-  ).multiplyScalar(this.MASS);
+  private gravity: THREE.Vector3 = new THREE.Vector3(0, -this.GRAVITY, 0).multiplyScalar(this.MASS);
   private TIMESTEP: number = 18 / 1000;
   private TIMESTEP_SQ: number = this.TIMESTEP * this.TIMESTEP;
   private pins: number[] = [6];
@@ -66,9 +62,8 @@ export default class ClothSystem extends Vue {
   }
 
   private togglePins() {
-    this.pins = this.pinsFormation[
-      ~~(Math.random() * this.pinsFormation.length)
-    ];
+    /* tslint:disable:no-bitwise */
+    this.pins = this.pinsFormation[~~(Math.random() * this.pinsFormation.length)];
   }
 
   private init() {
@@ -78,12 +73,7 @@ export default class ClothSystem extends Vue {
     this.scene.background = new THREE.Color(0xcce0ff);
     this.scene.fog = new THREE.Fog(0xcce0ff, 500, 10000);
 
-    this.camera = new THREE.PerspectiveCamera(
-      30,
-      window.innerWidth / window.innerHeight,
-      1,
-      10000,
-    );
+    this.camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 10000);
     this.camera.position.set(1000, 50, 1500);
     this.scene.add(new THREE.AmbientLight(0x666666));
 
@@ -140,10 +130,7 @@ export default class ClothSystem extends Vue {
     const groundMaterial = new THREE.MeshBasicMaterial({
       color: 0x00ff00,
     });
-    const mesh = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry(20000, 20000),
-      groundMaterial,
-    );
+    const mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(20000, 20000), groundMaterial);
     mesh.position.y = -250;
     mesh.rotation.x = -Math.PI / 2;
     mesh.receiveShadow = true;
@@ -167,10 +154,7 @@ export default class ClothSystem extends Vue {
     pole2.castShadow = true;
     this.scene.add(pole2);
 
-    const pole3 = new THREE.Mesh(
-      new THREE.BoxBufferGeometry(255, 5, 5),
-      poleMat,
-    );
+    const pole3 = new THREE.Mesh(new THREE.BoxBufferGeometry(255, 5, 5), poleMat);
     pole3.position.y = -250 + 750 / 2;
     pole3.position.x = 0;
     pole3.receiveShadow = true;
@@ -216,7 +200,13 @@ export default class ClothSystem extends Vue {
       return;
     }
 
-    let i, j, il, particles, particle, constraints, constraint;
+    let i;
+    let j;
+    let il;
+    let particles;
+    let particle;
+    let constraints;
+    let constraint;
     // Aerodynamics forces
 
     if (this.params.enableWind) {
@@ -241,11 +231,7 @@ export default class ClothSystem extends Vue {
       }
     }
 
-    for (
-      particles = this.cloth.particles, i = 0, il = particles.length;
-      i < il;
-      i++
-    ) {
+    for (particles = this.cloth.particles, i = 0, il = particles.length; i < il; i++) {
       particle = particles[i];
       particle.addForce(this.gravity);
       particle.integrate(this.TIMESTEP_SQ);
@@ -263,11 +249,7 @@ export default class ClothSystem extends Vue {
 
     if (this.params.showBall) {
       this.sphere.visible = true;
-      for (
-        particles = this.cloth.particles, i = 0, il = particles.length;
-        i < il;
-        i++
-      ) {
+      for (particles = this.cloth.particles, i = 0, il = particles.length; i < il; i++) {
         particle = particles[i];
         const pos = particle.position;
         this.diff.subVectors(pos, this.ballPosition);
@@ -282,11 +264,7 @@ export default class ClothSystem extends Vue {
     }
 
     // Floor Constraints
-    for (
-      particles = this.cloth.particles, i = 0, il = particles.length;
-      i < il;
-      i++
-    ) {
+    for (particles = this.cloth.particles, i = 0, il = particles.length; i < il; i++) {
       particle = particles[i];
 
       if (particle.position.y < -250) {
@@ -302,11 +280,7 @@ export default class ClothSystem extends Vue {
     }
 
     // Floor Constraints
-    for (
-      particles = this.cloth.particles, i = 0, il = particles.length;
-      i < il;
-      i++
-    ) {
+    for (particles = this.cloth.particles, i = 0, il = particles.length; i < il; i++) {
       particle = particles[i];
 
       if (particle.position.y < -250) {
@@ -352,11 +326,7 @@ export default class ClothSystem extends Vue {
     if (this.play) {
       const time = Date.now();
       const windStrength = Math.cos(time / 7000) * 20 + 40;
-      this.windForce.set(
-        Math.sin(time / 2000),
-        Math.cos(time / 3000),
-        Math.sin(time / 1000),
-      );
+      this.windForce.set(Math.sin(time / 2000), Math.cos(time / 3000), Math.sin(time / 1000));
       this.windForce.normalize();
       this.windForce.multiplyScalar(windStrength);
       this.simulate(time);
@@ -366,8 +336,7 @@ export default class ClothSystem extends Vue {
         const v = p[i].position;
         this.clothGeometry.attributes.position.setXYZ(i, v.x, v.y, v.z);
       }
-      (this.clothGeometry.attributes
-        .position as THREE.BufferAttribute).needsUpdate = true;
+      (this.clothGeometry.attributes.position as THREE.BufferAttribute).needsUpdate = true;
       this.clothGeometry.computeVertexNormals();
       this.sphere.position.copy(this.ballPosition);
     }
