@@ -93,5 +93,10 @@ export default new Router({
       name: 'moon',
       component: () => import('./render/Moon'),
     },
+    {
+      path: '/Rotaion',
+      name: 'rotaion',
+      component: () => import('./render/Rotaion'),
+    },
   ],
 });

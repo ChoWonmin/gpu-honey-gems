@@ -32,12 +32,14 @@
           .subtitle-2.link(@click="$router.push({name: 'liquid'})") Liquid
         .item-list.pl-2
           .subtitle-2.link(@click="$router.push({name: 'fire'})") Fire
-        .item-list.pl-2
-          .subtitle-2.link(@click="$router.push({name: 'moon'})") Moon  
       .group.py-2
-        .title Animation
+        .title Universe
         .item-list.pl-2
           .subtitle-2.link(@click="$router.push({name: 'space'})") Stars
+        .item-list.pl-2
+          .subtitle-2.link(@click="$router.push({name: 'moon'})") Moon
+        .item-list.pl-2
+          .subtitle-2.link(@click="$router.push({name: 'rotaion'})") Rotaion    
 </template>
 
 <script lang="ts">
@@ -52,5 +54,9 @@ export default class Home extends Vue {}
   &:hover {
     color: #1867c0 !important;
   }
+}
+
+.content-list-container {
+  max-width: 480px;
 }
 </style>
