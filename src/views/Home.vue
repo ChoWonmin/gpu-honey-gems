@@ -36,10 +36,12 @@
         .title Universe
         .item-list.pl-2
           .subtitle-2.link(@click="$router.push({name: 'space'})") Stars
-        .item-list.pl-2
+        .item-list.pl-2 
           .subtitle-2.link(@click="$router.push({name: 'moon'})") Moon
         .item-list.pl-2
-          .subtitle-2.link(@click="$router.push({name: 'rotaion'})") Rotaion    
+          .subtitle-2.link(@click="$router.push({name: 'rotaion'})") Rotaion
+        .item-list.pl-2
+          .subtitle-2.link(@click="$router.push({name: 'revolution'})") Revolution      
 </template>
 
 <script lang="ts">

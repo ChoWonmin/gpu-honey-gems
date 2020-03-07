@@ -98,5 +98,10 @@ export default new Router({
       name: 'rotaion',
       component: () => import('./render/Rotaion'),
     },
+    {
+      path: '/Revolution',
+      name: 'revolution',
+      component: () => import('./render/Revolution'),
+    },
   ],
 });
