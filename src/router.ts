@@ -103,5 +103,10 @@ export default new Router({
       name: 'revolution',
       component: () => import('./render/Revolution'),
     },
+    {
+      path: '/Solar',
+      name: 'solar',
+      component: () => import('./render/Solar'),
+    },
   ],
 });
