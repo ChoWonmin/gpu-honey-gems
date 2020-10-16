@@ -26,9 +26,9 @@ export default class Basis extends Vue {
   private height: number = -1;
 
   private dt: number = 0;
-  private airDrag: number = 1200;
-  private waterDrag: number = 1000;
-  private mass: number = 1200;
+  private airDrag: number = 150;
+  private waterDrag: number = 3500;
+  private mass: number = 600;
   private particles: Particle[] = [];
   private radius: number = 40;
 
@@ -112,7 +112,19 @@ export default class Basis extends Vue {
   }
 
   private frame(dt: number) {
+    const floorY = -3000;
+    const floorYoffset = -100;
+
+    const last = this.particles[this.particles.length - 1];
+    if (last.mesh.position.y < last.radius + floorY + floorYoffset) {
+      this.reset();
+    }
+
     for (const particle of this.particles) {
+      if (particle.mesh.position.y < particle.radius + floorY) {
+        particle.mesh.position.y = particle.radius + floorY;
+      }
+
       particle.clearForce();
 
       const gravity = new THREE.Vector3(0, -1, 0).multiplyScalar(
@@ -133,10 +145,6 @@ export default class Basis extends Vue {
       particle.addForce(dragForce);
 
       particle.eval(dt);
-
-      if (particle.mesh.position.y < particle.radius - 3000) {
-        particle.mesh.position.y = particle.radius - 3000;
-      }
     }
   }
 
