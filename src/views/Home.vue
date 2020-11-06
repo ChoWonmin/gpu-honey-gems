@@ -15,7 +15,7 @@
       .group.py-2
         .title Physics
         .item-list.pl-2
-          .subtitle-2.link(@click="$router.push({name: 'physicsBasis'})") Basis    
+          .subtitle-2.link(@click="$router.push({name: 'physicsBasis'})") Gravity    
         .item-list.pl-2
           .subtitle-2.link(@click="$router.push({name: 'physicsSpring'})") Spring
         .item-list.pl-2
