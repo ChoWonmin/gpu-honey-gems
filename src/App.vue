@@ -1,7 +1,7 @@
 <template lang="pug">
   v-app
     v-content.app-container
-      .nav-warp
+      .nav-warp(v-if="nav" @click="nav=false")
         .nav
       router-view
 </template>
@@ -12,7 +12,7 @@ import Vue from 'vue';
 export default Vue.extend({
   data() {
     return {
-      drawer: null,
+      nav: true,
     };
   },
 });
