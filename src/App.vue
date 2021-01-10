@@ -3,6 +3,47 @@
     v-content.app-container
       .nav-warp(v-if="nav" @click="nav=false")
         .nav
+          .content-list-container.pa-2
+            .group.py-2
+              .title Geometry
+              .item-list.pl-2
+                .subtitle-2.link(@click="$router.push({name: 'terrain'})") Terrain
+            .group.py-2
+              .title Lighting
+              .item-list.pl-2
+                .subtitle-2.link(@click="$router.push({name: 'wolf'})") Wolf
+              .item-list.pl-2
+                .subtitle-2.link(@click="$router.push({name: 'reflection'})") Reflection  
+            .group.py-2
+              .title Physics
+              .item-list.pl-2
+                .subtitle-2.link(@click="$router.push({name: 'physicsBasis'})") Gravity    
+              //- .item-list.pl-2
+              //-   .subtitle-2.link(@click="$router.push({name: 'physicsSpring'})") Spring
+              .item-list.pl-2
+                .subtitle-2.link(@click="$router.push({name: 'physicsClothSystem'})") Cloth System  
+            .group.py-2
+              .title Geometry Buffer
+              .item-list.pl-2
+                .subtitle-2.link(@click="$router.push({name: 'cubeGeoBuffer'})") Cube
+                //- .subtitle-2.link(@click="$router.push({name: 'fractal'})") Fractal Tree
+                .subtitle-2.link(@click="$router.push({name: 'instancing'})") Instancing   
+            .group.py-2
+              .title Texture
+              .item-list.pl-2
+                .subtitle-2.link(@click="$router.push({name: 'liquid'})") Liquid
+              .item-list.pl-2
+                .subtitle-2.link(@click="$router.push({name: 'fire'})") Fire
+            .group.py-2
+              .title Universe
+              .item-list.pl-2
+                .subtitle-2.link(@click="$router.push({name: 'space'})") Stars
+              .item-list.pl-2 
+                .subtitle-2.link(@click="$router.push({name: 'moon'})") Moon
+              .item-list.pl-2
+                .subtitle-2.link(@click="$router.push({name: 'rotaion'})") Rotaion
+              .item-list.pl-2
+                .subtitle-2.link(@click="$router.push({name: 'revolution'})") Revolution
       router-view
 </template>
 
@@ -34,6 +75,16 @@ export default Vue.extend({
       height: 100vh;
       background-color: #fefefe;
     }
+  }
+
+  .link {
+    &:hover {
+      color: #1867c0 !important;
+    }
+  }
+
+  .content-list-container {
+    max-width: 480px;
   }
 </style>
 </style>
