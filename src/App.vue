@@ -56,6 +56,12 @@ export default Vue.extend({
       nav: true,
     };
   },
+  methods: {
+    linkPage(page) {
+      this.nav = false;
+      this.$router.push({name: page});
+    },
+  },
 });
 </script>
 
