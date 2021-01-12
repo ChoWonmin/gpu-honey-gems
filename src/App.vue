@@ -7,43 +7,43 @@
             .group.py-2
               .title Geometry
               .item-list.pl-2
-                .subtitle-2.link(@click="$router.push({name: 'terrain'})") Terrain
+                .subtitle-2.link(@click="linkPage('terrain')") Terrain
             .group.py-2
               .title Lighting
               .item-list.pl-2
-                .subtitle-2.link(@click="$router.push({name: 'wolf'})") Wolf
+                .subtitle-2.link(@click="linkPage('wolf')") Wolf
               .item-list.pl-2
-                .subtitle-2.link(@click="$router.push({name: 'reflection'})") Reflection  
+                .subtitle-2.link(@click="linkPage('reflection')") Reflection  
             .group.py-2
               .title Physics
               .item-list.pl-2
-                .subtitle-2.link(@click="$router.push({name: 'physicsBasis'})") Gravity    
+                .subtitle-2.link(@click="linkPage('physicsBasis')") Gravity    
               //- .item-list.pl-2
               //-   .subtitle-2.link(@click="$router.push({name: 'physicsSpring'})") Spring
               .item-list.pl-2
-                .subtitle-2.link(@click="$router.push({name: 'physicsClothSystem'})") Cloth System  
+                .subtitle-2.link(@click="linkPage('physicsClothSystem')") Cloth System  
             .group.py-2
               .title Geometry Buffer
               .item-list.pl-2
-                .subtitle-2.link(@click="$router.push({name: 'cubeGeoBuffer'})") Cube
+                .subtitle-2.link(@click="linkPage('cubeGeoBuffer')") Cube
                 //- .subtitle-2.link(@click="$router.push({name: 'fractal'})") Fractal Tree
-                .subtitle-2.link(@click="$router.push({name: 'instancing'})") Instancing   
+                .subtitle-2.link(@click="linkPage('instancing')") Instancing   
             .group.py-2
               .title Texture
               .item-list.pl-2
-                .subtitle-2.link(@click="$router.push({name: 'liquid'})") Liquid
+                .subtitle-2.link(@click="linkPage('liquid'))") Liquid
               .item-list.pl-2
-                .subtitle-2.link(@click="$router.push({name: 'fire'})") Fire
+                .subtitle-2.link(@click="linkPage('fire')") Fire
             .group.py-2
               .title Universe
               .item-list.pl-2
-                .subtitle-2.link(@click="$router.push({name: 'space'})") Stars
+                .subtitle-2.link(@click="linkPage('space')") Stars
               .item-list.pl-2 
-                .subtitle-2.link(@click="$router.push({name: 'moon'})") Moon
+                .subtitle-2.link(@click="linkPage('moon')") Moon
               .item-list.pl-2
-                .subtitle-2.link(@click="$router.push({name: 'rotaion'})") Rotaion
+                .subtitle-2.link(@click="linkPage('rotaion')") Rotaion
               .item-list.pl-2
-                .subtitle-2.link(@click="$router.push({name: 'revolution'})") Revolution
+                .subtitle-2.link(@click="linkPage('revolution')") Revolution
       router-view
 </template>
 
