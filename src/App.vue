@@ -31,7 +31,7 @@
             .group.py-2
               .title Texture
               .item-list.pl-2
-                .subtitle-2.link(@click="linkPage('liquid'))") Liquid
+                .subtitle-2.link(@click="linkPage('liquid')") Liquid
               .item-list.pl-2
                 .subtitle-2.link(@click="linkPage('fire')") Fire
             .group.py-2
@@ -57,7 +57,7 @@ export default Vue.extend({
     };
   },
   methods: {
-    linkPage(page) {
+    linkPage(page: string) {
       this.nav = false;
       this.$router.push({name: page});
     },

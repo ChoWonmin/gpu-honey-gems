@@ -1,21 +1,21 @@
 <template lang="pug">
   v-content.pa-4
-    .display-1 GPU-Honey-Gems
-    .content-list-container.pa-2
-      .group.py-2
-        .title Geometry
-        .item-list.pl-2
-          .subtitle-2.link(@click="$router.push({name: 'terrain'})") Terrain
-      .group.py-2
-        .title Lighting
-        .item-list.pl-2
-          .subtitle-2.link(@click="$router.push({name: 'wolf'})") Wolf
-        .item-list.pl-2
-          .subtitle-2.link(@click="$router.push({name: 'reflection'})") Reflection  
-      .group.py-2
-        .title Physics
-        .item-list.pl-2
-          .subtitle-2.link(@click="$router.push({name: 'physicsBasis'})") Gravity    
+    //- .display-1 GPU-Honey-Gems
+    //- .content-list-container.pa-2
+    //-   .group.py-2
+    //-     .title Geometry
+    //-     .item-list.pl-2
+    //-       .subtitle-2.link(@click="$router.push({name: 'terrain'})") Terrain
+    //-   .group.py-2
+    //-     .title Lighting
+    //-     .item-list.pl-2
+    //-       .subtitle-2.link(@click="$router.push({name: 'wolf'})") Wolf
+    //-     .item-list.pl-2
+    //-       .subtitle-2.link(@click="$router.push({name: 'reflection'})") Reflection  
+    //-   .group.py-2
+    //-     .title Physics
+    //-     .item-list.pl-2
+    //-       .subtitle-2.link(@click="$router.push({name: 'physicsBasis'})") Gravity    
         //- .item-list.pl-2
         //-   .subtitle-2.link(@click="$router.push({name: 'physicsSpring'})") Spring
         .item-list.pl-2
@@ -41,7 +41,7 @@
         .item-list.pl-2
           .subtitle-2.link(@click="$router.push({name: 'rotaion'})") Rotaion
         .item-list.pl-2
-          .subtitle-2.link(@click="$router.push({name: 'revolution'})") Revolution      
+          .subtitle-2.link(@click="$router.push({name: 'revolution'})") Revolution
 </template>
 
 <script lang="ts">
