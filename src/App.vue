@@ -1,6 +1,9 @@
 <template lang="pug">
   v-app
     v-content.app-container
+      .nav-btn
+        v-btn(small icon)
+          v-icon mdi-stop
       .nav-warp(v-if="nav" @click="nav=false")
         .nav
           .content-list-container.pa-2
