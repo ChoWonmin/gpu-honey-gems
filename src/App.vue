@@ -2,8 +2,9 @@
   v-app
     v-content.app-container
       .nav-btn
-        v-btn(small icon)
-          v-icon mdi-stop
+        v-row
+          v-btn(fab small color="white").mx-1
+            v-icon(color="#003569") mdi-stop
       .nav-warp(v-if="nav" @click="nav=false")
         .nav
           .content-list-container.pa-2
@@ -74,11 +75,18 @@ export default Vue.extend({
     height: 100%;
     position: relative;
   }
+  .nav-btn {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    z-index: 5;
+  }
   .nav-warp {
     position: absolute;
     width: 100vw;
     height: 100vh;
     background-color: rgba(0,0,0, 0.36);
+    z-index: 10;
     .nav {
       width: 240px;
       height: 100vh;
