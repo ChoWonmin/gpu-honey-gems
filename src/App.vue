@@ -4,7 +4,7 @@
       .nav-btn
         v-row
           v-btn(fab small color="white").mx-1
-            v-icon(color="#003569") mdi-stop
+            v-icon(color="#003569") mdi-menu
       .nav-warp(v-if="nav" @click="nav=false")
         .nav
           .content-list-container.pa-2
