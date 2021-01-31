@@ -3,7 +3,7 @@
     v-content.app-container
       .nav-btn
         v-row
-          v-btn(fab small color="white").mx-1
+          v-btn(fab small color="white" @click="nav=true").mx-1
             v-icon(color="#003569") mdi-menu
       .nav-warp(v-if="nav" @click="nav=false")
         .nav
@@ -91,6 +91,7 @@ export default Vue.extend({
       width: 240px;
       height: 100vh;
       background-color: #fefefe;
+      box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
     }
   }
 
