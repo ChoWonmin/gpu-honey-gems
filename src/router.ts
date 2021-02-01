@@ -11,7 +11,7 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: () => import('./render/Fire'),
+      component: () => import('./render/Wolf'),
     },
     {
       path: '/about',
