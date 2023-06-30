@@ -19,6 +19,11 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
     },
     {
+      path: '/room',
+      name: 'room',
+      component: () => import('./render/Room'),
+    },
+    {
       path: '/space',
       name: 'space',
       component: () => import('./render/Space'),
